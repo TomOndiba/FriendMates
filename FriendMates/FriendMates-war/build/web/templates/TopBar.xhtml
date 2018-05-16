@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+    <h:head>
+    </h:head>
+    <h:body>
+        <header id="header">
+            <nav class="navbar navbar-default navbar-fixed-top menu">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="index.xhtml"><img src="../resources/images/logo.png" alt="logo" /></a>
+                </div>
+                <div class="container">
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <h:form>
+                            <ul class="nav navbar-nav navbar-right main-menu">
+                                <li class="dropdown"><h:commandLink action="#{userManagedBean.doLogout()}">Logout</h:commandLink></li>
+                            </ul>
+                        </h:form>
+                        <h:form class="navbar-form navbar-left hidden-sm">
+                            <div class="form-group">
+                                <i class="icon ion-android-search"></i>
+
+                                <h:inputText class="form-control" pt:placeholder="Search friends"></h:inputText>
+
+                                <!--<input type="text" class="form-control" placeholder="Search friends, photos, videos"></input>-->
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </nav>
+        </header>
+    </h:body>
+</html>
+

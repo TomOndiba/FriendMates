@@ -1,0 +1,262 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui" >
+
+    <h:head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="This is social network html5 template available in themeforest......" />
+        <meta name="keywords" content="Social Network, Social Media, Make Friends, Newsfeed, Profile Page" />
+        <meta name="robots" content="index, follow" />
+
+        <title>FriendMates - Login</title>
+
+        <!-- Stylesheets -->
+
+
+        <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+        <h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+        <h:outputStylesheet library="css" name="ionicons.min.css"></h:outputStylesheet>
+        <h:outputStylesheet library="css" name="font-awesome.min.css"></h:outputStylesheet>
+
+        <!--<link rel="stylesheet" href="../resources/css/bootstrap.min.css" />
+                <link rel="stylesheet" href="../resources/css/style.css" />
+                <link rel="stylesheet" href="../resources/css/ionicons.min.css" />
+                <link rel="stylesheet" href="../resources/css/font-awesome.min.css" />-->
+
+        <!--Google Font-->
+
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,700i" rel="stylesheet" />
+
+        <script>
+
+            function changetab()
+            {
+                $("#liregister").addClass("active");
+                $("#lilogin").removeClass("active");
+            }
+
+            
+        </script>
+        <style>
+
+
+            .genderClass{
+                padding-right: 20px;
+                padding-left: 2px;
+                color: #939598; 
+            }
+            .ui-inputfield,.ui-inputfield:focus{
+
+                background: #fff;
+                color: #939598;
+                border-radius: 30px;
+                box-shadow: none;
+                width: 100%;
+                border: 1px solid #f1f2f2;
+                padding-left: 15px;
+            }
+            input[type="checkbox"], input[type="radio"]{
+
+                position: relative;
+                display: inline-block;
+                padding: 20px;
+                margin-left: 20px;
+                margin-bottom: 0;
+                font-weight: 400;
+                vertical-align: text-bottom;
+                cursor: auto;
+
+            }
+            .error td
+            {
+                color: red;
+                padding-left: 10px;
+            }
+
+        </style>
+    </h:head>
+    <h:body>
+
+
+        <!--Landing Page Contents--> 
+        <div id="lp-register">
+            <div class="container wrapper">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <div class="intro-texts">
+                            <h1 class="text-white">Make Cool Friends !!!</h1>
+                            <p>FriendMates is a social network portal that can be used to connect people.  <br /> </p>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-sm-offset-1">
+                        <div class="reg-form-container"> 
+
+                            <!--Register/Login Tabs-->
+                            <div class="reg-options">
+                                <ul class="nav nav-tabs">
+                                    <li id="liregister" ><a href="#register" data-toggle="tab">Register</a></li>
+                                    <li id="lilogin" class="active"><a href="#login" data-toggle="tab">Login</a></li>
+                                </ul>
+                                <!--Tabs End-->
+                            </div>
+
+                            <div class="tab-content">
+                                <!--Registration Form Contents-->
+                                <div class="tab-pane" id="register">
+                                    <h3>Register Now !!!</h3>
+                                    <h:form id="registration_form" class="form-inline">
+
+
+                                        <p class="text-muted">Be cool and join today. Meet millions</p>
+
+                                        <div class="row">
+                                            <div class="form-group col-xs-6">
+                                                <h:outputLabel for="firstname" class="sr-only" value="First Name"></h:outputLabel>
+                                                <h:inputText id="firstname" class="form-control input-group-lg" title="Enter first name" pt:placeholder="First name" value="#{userManagedBean.firstName}" required="true" requiredMessage="First name is mendatory" validator="#{userManagedBean.validateFName}" >
+                                                    <p:ajax event="keyup" update="msgfName"></p:ajax>
+                                                </h:inputText>
+                                                <h:message for="firstname" style="color: red;padding-left: 15px" id="msgfName"></h:message>
+                                            </div>
+                                            <div class="form-group col-xs-6">
+                                                <h:outputLabel for="lastname" class="sr-only" value="Last Name"></h:outputLabel>
+                                                <h:inputText id="lastname" class="form-control input-group-lg" title="Enter last name" pt:placeholder="Last name" value="#{userManagedBean.lastName}" required="true" requiredMessage="Last name is mendatory" validator="#{userManagedBean.validateLName}">
+                                                    <p:ajax event="keyup" update="msglName"></p:ajax>
+                                                </h:inputText>
+                                                <h:message for="lastname" style="color: red;padding-left: 15px" id="msglName"></h:message>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-xs-12">
+                                                <h:outputLabel for="mobile" class="sr-only" value="Mobile no."></h:outputLabel>
+                                                <h:inputText id="mobile" class="form-control input-group-lg" label="MobileNo." title="Enter Mobile no." pt:placeholder="Your Mobile no." value="#{userManagedBean.mobileNo}" required="true" requiredMessage="Mobile number is mendatory" converterMessage="Mobile nmber must contains digits only" validator="#{userManagedBean.validateMobileNo}" >
+                                                    <p:ajax event="keyup" update="msgMobile"></p:ajax>                                                    
+                                                </h:inputText>
+                                                <h:message for="mobile" style="color: red;padding-left: 15px" id="msgMobile"></h:message>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-xs-12">
+                                                <h:outputLabel for="email" class="sr-only" value="Email"></h:outputLabel>
+                                                <h:inputText id="email" class="form-control input-group-lg" label="Email" title="Enter Email" pt:placeholder="Your Email" value="#{userManagedBean.emailId}" required="true" requiredMessage="Email is mendatory" validator="#{userManagedBean.validateEmail}">
+                                                    <p:ajax event="keyup" update="msgEmail"></p:ajax>
+                                                </h:inputText>
+                                                <h:message for="email" style="color: red;padding-left: 15px" id="msgEmail"></h:message>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-xs-12">
+                                                <h:outputLabel for="password" class="sr-only" value="Password"></h:outputLabel>
+                                                <h:inputSecret id="password" class="form-control input-group-lg" label="password" title="Enter password" pt:placeholder="Password" value="#{userManagedBean.password}" required="true" requiredMessage="Password is mendatory" validator="#{userManagedBean.validatePassword}">
+                                                    <p:ajax event="keyup" update="msgPassword"></p:ajax>
+                                                </h:inputSecret>
+                                                <h:message for="password" style="color: red;padding-left: 15px" id="msgPassword"></h:message>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="form-group col-sm-6 col-xs-12 " >
+                                                <p class="birth"><strong>Date of Birth</strong></p>
+                                                <p:calendar id="dob" value="#{userManagedBean.dob}" mask="true" pattern="yyyy-MM-dd" placeholder="yyyy-MM-dd" maskAutoClear="true" required="true" converterMessage="Select valid date" effect="slideDown" requiredMessage="Select valid date">
+                                                    <p:ajax event="blur" update="msgDob" ></p:ajax>
+                                                    <p:ajax event="dateSelect" update="msgDob" ></p:ajax>
+                                                </p:calendar>
+                                                <h:message for="dob" style="color: red;padding-left: 15px" id="msgDob"></h:message>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group col-sm-6 col-xs-12">
+                                                <h:outputLabel for="country" class="sr-only"></h:outputLabel>
+                                                <h:selectOneMenu id="country" class="form-control" value="#{userManagedBean.countryId}" required="true" requiredMessage="Select country">
+                                                    <f:selectItem itemLabel="Select Country" itemDisabled="true" pt:selected="true"></f:selectItem>
+                                                    <f:selectItems value="#{userManagedBean.lstCountry}" itemValue="#{userManagedBean.lstCountry}" itemLabel="#{userManagedBean.lstCountry}" />
+                                                    <p:ajax event="blur" update="msgCountry"></p:ajax>
+                                                    <p:ajax event="change" update="msgCountry"></p:ajax>
+                                                </h:selectOneMenu>
+                                                <h:message for="country" style="color: red;padding-left: 15px" id="msgCountry"></h:message>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-sm-9 col-xs-12 gender" >
+                                                <h:selectOneRadio  id="gender" enabledClass="genderClass" value="#{userManagedBean.gender}">
+                                                    <f:selectItem itemValue="Male" itemLabel="Male" ></f:selectItem>
+                                                    <f:selectItem itemValue="Female" itemLabel="Female"></f:selectItem>
+                                                </h:selectOneRadio>
+                                            </div>
+                                        </div>
+                                        <h:commandButton class="btn btn-primary" value="Register Now" action="#{userManagedBean.insertUser()}">
+                                        </h:commandButton>
+                                    </h:form>
+                                </div>
+                                <!--Registration Form Contents Ends-->
+
+                                <!--Login Form Contents-->
+                                <div class="tab-pane active" id="login">
+                                    <h3>Login</h3>
+                                    <p class="text-muted">Log into your account</p>
+
+                                    <!--Login Form-->
+                                    <h:form id='Login_form'>
+                                        <div class="row">
+                                            <div class="form-group col-xs-12">
+                                                <h:outputLabel for="email" class="sr-only" value="Email"></h:outputLabel>
+                                                <h:inputText id="email" class="form-control input-group-lg" label="Email" title="Enter Email" pt:placeholder="Your Email" value="#{userManagedBean.emailId}" required="true" requiredMessage="Email-ID is mendatory">
+                                                    <p:ajax event="keyup" update="msgEmail"></p:ajax>
+                                                </h:inputText>
+                                                <h:message for="email" style="color: red;padding-left: 15px" id="msgEmail"></h:message>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-xs-12">
+                                                <h:outputLabel for="password" class="sr-only" value="Password"></h:outputLabel>
+                                                <h:inputSecret id="password" class="form-control input-group-lg" label="password" title="Enter password" pt:placeholder="Password" value="#{userManagedBean.password}" required="true" requiredMessage="Password is mendatory">
+                                                    <p:ajax event="keyup" update="msgPassword"></p:ajax>
+                                                </h:inputSecret>
+                                                <h:message for="password" style="color: red;padding-left: 15px" id="msgPassword"></h:message>
+                                            </div>
+                                        </div>
+
+                                        <h:commandButton class="btn btn-primary" action="#{userManagedBean.doLogin()}" value="Login Now"></h:commandButton>
+
+                                    </h:form>
+                                    <p ></p>
+                                    <h:messages class="error"  globalOnly="true" layout="table"/>
+                                    <!--Login Form Ends--> 
+                                    <p style="padding-left: 10px"><a href="#">Forgot Password?</a><br></br>
+                                        <a href="#register" data-toggle="tab" onclick="changetab()">Not yet registered?</a></p>
+                                </div>
+                                <!--Login Form Contents Ends-->
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--
+                preloader -->
+        <div id="spinner-wrapper">
+            <div class="spinner"></div>
+        </div>
+
+
+
+    </h:body>
+    <h:outputScript library="js" name="bootstrap.min.js"></h:outputScript>
+    <h:outputScript library="js" name="jquery.appear.min.js"></h:outputScript>
+    <h:outputScript library="js" name="jquery.incremental-counter.js"></h:outputScript>
+    <h:outputScript library="js" name="script.js"></h:outputScript>
+
+    <!--<script src="../resources/js/bootstrap.min.js"></script>
+    <script src="../resources/js/jquery.appear.min.js"></script>
+    <script src="../resources/js/jquery.incremental-counter.js"></script>
+    <script src="../resources/js/script.js"></script>-->
+
+</html>
