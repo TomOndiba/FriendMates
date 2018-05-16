@@ -191,7 +191,8 @@
                                                 </h:selectOneRadio>
                                             </div>
                                         </div>
-                                        <h:commandButton class="btn btn-primary" value="Register Now" action="#{userManagedBean.insertUser()}">
+                                        <h:commandButton  class="btn btn-primary" action="#{userManagedBean.insertUser()}" value="Register Now">
+                                            <f:ajax execute="@form" render="@form" />
                                         </h:commandButton>
                                     </h:form>
                                 </div>
@@ -258,4 +259,5 @@
     <script src="../resources/js/jquery.appear.min.js"></script>
     <script src="../resources/js/jquery.incremental-counter.js"></script>
     <script src="../resources/js/script.js"></script>-->
+
 </html>

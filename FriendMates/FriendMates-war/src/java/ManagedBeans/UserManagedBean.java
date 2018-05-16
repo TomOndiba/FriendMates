@@ -48,6 +48,7 @@ public class UserManagedBean {
     Date dob;
     Integer countryId;
     Map<String, Integer> lstCountry;
+    Boolean isValid = false;
 
     public String getFirstName() {
         return firstName;
@@ -113,6 +114,15 @@ public class UserManagedBean {
         this.countryId = countryId;
     }
 
+    public Boolean getIsValid() {
+        return isValid;
+    }
+
+    public void setIsValid(Boolean isValid) {
+        this.isValid = isValid;
+    }
+
+    
     public Map<String, Integer> getLstCountry() throws SQLException {
         Map<String, Integer> TemplstCountry = new LinkedHashMap<String, Integer>();
         Connection con = null;
@@ -174,14 +184,15 @@ public class UserManagedBean {
         gender = "Male";
     }
 
-    public void insertUser() {
+    public String insertUser() {
         try {
-
-            String pwdenc = sha256(password);
-            userBean.insertUser(firstName, lastName, mobileNo, emailId, pwdenc, dob, gender, countryId, new java.util.Date());
-            clearText();
+                String pwdenc = sha256(password);
+                userBean.insertUser(firstName, lastName, mobileNo, emailId, pwdenc, dob, gender, countryId, new java.util.Date());
+                clearText();
+                return "/LoginRegistration.xhtml?faces-redirect=true";
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
+            return null;
         }
     }
 
@@ -223,9 +234,10 @@ public class UserManagedBean {
 
             FacesMessage message = new FacesMessage(
                     "Enter valid first name");
-            context.addMessage(comp.getClientId(context), message);
-
-        }
+            context.addMessage(comp.getClientId(context), message);                       
+            
+            throw new ValidatorException(message);
+        }        
     }
 
     public void validateLName(FacesContext context, UIComponent comp,
@@ -237,6 +249,8 @@ public class UserManagedBean {
             FacesMessage message = new FacesMessage(
                     "Enter valid last name");
             context.addMessage(comp.getClientId(context), message);
+            
+            throw new ValidatorException(message);
 
         }
     }
@@ -252,6 +266,7 @@ public class UserManagedBean {
                     "Mobile number must be of 10 digits");
             context.addMessage(comp.getClientId(context), message);
 
+            throw new ValidatorException(message);
         }
     }
 
@@ -259,12 +274,24 @@ public class UserManagedBean {
             Object value) {
         String email = value.toString();
         String pattern = "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,4})+$";
+        
+        List<UserTB> lstUser=userBean.getUserByEmailId(email);
+        
         if (!email.matches(pattern)) {
 
             FacesMessage message = new FacesMessage(
                     "Enter valid Email-ID");
             context.addMessage(comp.getClientId(context), message);
 
+            throw new ValidatorException(message);
+        }
+        else if(lstUser.size() > 0)
+        {
+            FacesMessage message = new FacesMessage(
+                    "Email-ID already in use");
+            context.addMessage(comp.getClientId(context), message);
+            
+            throw new ValidatorException(message);
         }
     }
 
@@ -278,6 +305,7 @@ public class UserManagedBean {
                     "Passwords must contain at least 1 upper case , 1 lower case , 1 number or special character and atleast 8 characters in length ");
             context.addMessage(comp.getClientId(context), message);
 
+            throw new ValidatorException(message);
         }
     }
 
@@ -285,25 +313,22 @@ public class UserManagedBean {
 
         HttpSession userSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 
-        if(userSession.getAttribute("userEmail") == null)
-        {
+        if (userSession.getAttribute("userEmail") == null) {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("../LoginRegistration.xhtml");
             } catch (IOException ex) {
                 Logger.getLogger(UserManagedBean.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        else
-        {
+        } else {
             String email = userSession.getAttribute("userEmail").toString();
             emailId = email;
-            List<UserTB> userList=userBean.getUserByEmailId(emailId);
-            
+            List<UserTB> userList = userBean.getUserByEmailId(emailId);
+
             for (UserTB user : userList) {
-                
-                firstName=user.getFName();
-                lastName=user.getLName();
-                
+
+                firstName = user.getFName();
+                lastName = user.getLName();
+
             }
         }
         //}
