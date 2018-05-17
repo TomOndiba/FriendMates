@@ -10,17 +10,23 @@
         <header id="header">
             <nav class="navbar navbar-default navbar-fixed-top menu">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="index.xhtml"><img src="../resources/images/FinalLogo.png" alt="logo" width="195px" height="50px" style="margin-top: -5px"/></a>
+                    <a class="navbar-brand" href="index.xhtml"><img src="../resources/images/FinalLogo.png" alt="logo" width="250px" height="70px" style="margin-top: -10px"/></a>
                 </div>
                 <div class="container">
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-right: -100px">
                         <h:form>
                             <ul class="nav navbar-nav navbar-right main-menu">
-                                <li class="dropdown"><h:commandLink action="#{userManagedBean.doLogout()}">Logout</h:commandLink></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="../resources/images/users/user-1.jpg" alt="user" class="profile-photo" style="border-radius: 50%;margin-top: -5px;width: 40px;height: 40px;border:2px solid #fff"/><span style="margin-left: 10px">#{userManagedBean.firstName} #{userManagedBean.lastName}</span> </a>
+                                    <ul class="dropdown-menu newsfeed-home">
+                                        <li><h:commandLink action="#{userManagedBean.doLogout()}">Logout</h:commandLink></li>
+                                    </ul>
+                                </li>
                             </ul>
                         </h:form>
                         <h:form class="navbar-form navbar-left hidden-sm">
-                            <div class="form-group">
+                            <div class="form-group" style="margin-left: 30px">
                                 <i class="icon ion-android-search"></i>
 
                                 <h:inputText class="form-control" pt:placeholder="Search friends"></h:inputText>

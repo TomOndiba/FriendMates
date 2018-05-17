@@ -11,8 +11,11 @@
         <ui:composition template="/templates/common.xhtml">
 
             <ui:define name="content">
-                Welcome, #{userManagedBean.emailId}
+                <div style="margin-top:15px">
+                    
+                    Welcome, #{userManagedBean.emailId}
 
+                </div>
                 <p:dialog header="Upload Profile Picture" widgetVar="profileDialog" modal="true" height="100" rendered="#{empty userManagedBean.profilePicture}">
                     <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="true"
                                   sizeLimit="250000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
