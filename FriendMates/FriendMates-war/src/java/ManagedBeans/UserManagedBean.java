@@ -43,12 +43,11 @@ public class UserManagedBean {
     @EJB
     private UserBeanLocal userBean;
 
-    String firstName, lastName, emailId, password, gender = "Male";
+    String firstName, lastName, emailId, password, gender = "Male",profilePicture;
     BigInteger mobileNo;
     Date dob;
     Integer countryId;
     Map<String, Integer> lstCountry;
-    Boolean isValid = false;
 
     public String getFirstName() {
         return firstName;
@@ -114,14 +113,13 @@ public class UserManagedBean {
         this.countryId = countryId;
     }
 
-    public Boolean getIsValid() {
-        return isValid;
+    public String getProfilePicture() {
+        return profilePicture;
     }
 
-    public void setIsValid(Boolean isValid) {
-        this.isValid = isValid;
-    }
-
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
+    }   
     
     public Map<String, Integer> getLstCountry() throws SQLException {
         Map<String, Integer> TemplstCountry = new LinkedHashMap<String, Integer>();
@@ -328,7 +326,7 @@ public class UserManagedBean {
 
                 firstName = user.getFName();
                 lastName = user.getLName();
-
+                profilePicture=user.getProfilePicture();
             }
         }
         //}

@@ -120,6 +120,7 @@
                                                 <h:outputLabel for="firstname" class="sr-only" value="First Name"></h:outputLabel>
                                                 <h:inputText id="firstname" class="form-control input-group-lg" title="Enter first name" pt:placeholder="First name" value="#{userManagedBean.firstName}" required="true" requiredMessage="First name is mendatory" validator="#{userManagedBean.validateFName}" >
                                                     <p:ajax event="keyup" update="msgfName"></p:ajax>
+                                                    <p:ajax event="blur" update="msgfName"></p:ajax>
                                                 </h:inputText>
                                                 <h:message for="firstname" style="color: red;padding-left: 15px" id="msgfName"></h:message>
                                             </div>
@@ -127,6 +128,7 @@
                                                 <h:outputLabel for="lastname" class="sr-only" value="Last Name"></h:outputLabel>
                                                 <h:inputText id="lastname" class="form-control input-group-lg" title="Enter last name" pt:placeholder="Last name" value="#{userManagedBean.lastName}" required="true" requiredMessage="Last name is mendatory" validator="#{userManagedBean.validateLName}">
                                                     <p:ajax event="keyup" update="msglName"></p:ajax>
+                                                    <p:ajax event="blur" update="msglName"></p:ajax>
                                                 </h:inputText>
                                                 <h:message for="lastname" style="color: red;padding-left: 15px" id="msglName"></h:message>
                                             </div>
@@ -136,6 +138,7 @@
                                                 <h:outputLabel for="mobile" class="sr-only" value="Mobile no."></h:outputLabel>
                                                 <h:inputText id="mobile" class="form-control input-group-lg" label="MobileNo." title="Enter Mobile no." pt:placeholder="Your Mobile no." value="#{userManagedBean.mobileNo}" required="true" requiredMessage="Mobile number is mendatory" converterMessage="Mobile nmber must contains digits only" validator="#{userManagedBean.validateMobileNo}" >
                                                     <p:ajax event="keyup" update="msgMobile"></p:ajax>                                                    
+                                                    <p:ajax event="blur" update="msgMobile"></p:ajax>                                                    
                                                 </h:inputText>
                                                 <h:message for="mobile" style="color: red;padding-left: 15px" id="msgMobile"></h:message>
                                             </div>
@@ -145,6 +148,7 @@
                                                 <h:outputLabel for="email" class="sr-only" value="Email"></h:outputLabel>
                                                 <h:inputText id="email" class="form-control input-group-lg" label="Email" title="Enter Email" pt:placeholder="Your Email" value="#{userManagedBean.emailId}" required="true" requiredMessage="Email is mendatory" validator="#{userManagedBean.validateEmail}">
                                                     <p:ajax event="keyup" update="msgEmail"></p:ajax>
+                                                    <p:ajax event="blur" update="msgEmail"></p:ajax>
                                                 </h:inputText>
                                                 <h:message for="email" style="color: red;padding-left: 15px" id="msgEmail"></h:message>
                                             </div>
@@ -154,6 +158,7 @@
                                                 <h:outputLabel for="password" class="sr-only" value="Password"></h:outputLabel>
                                                 <h:inputSecret id="password" class="form-control input-group-lg" label="password" title="Enter password" pt:placeholder="Password" value="#{userManagedBean.password}" required="true" requiredMessage="Password is mendatory" validator="#{userManagedBean.validatePassword}">
                                                     <p:ajax event="keyup" update="msgPassword"></p:ajax>
+                                                    <p:ajax event="blur" update="msgPassword"></p:ajax>
                                                 </h:inputSecret>
                                                 <h:message for="password" style="color: red;padding-left: 15px" id="msgPassword"></h:message>
                                             </div>
