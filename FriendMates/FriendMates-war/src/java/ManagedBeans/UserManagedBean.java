@@ -7,7 +7,12 @@ package ManagedBeans;
 
 import Beans.UserBeanLocal;
 import EntityClasses.UserTB;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.sql.Connection;
@@ -15,6 +20,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -22,32 +29,54 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
-
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.io.FilenameUtils;
+import org.primefaces.event.FileUploadEvent;
 
 /**
  *
  * @author root
  */
 @Named(value = "userManagedBean")
-@RequestScoped
-public class UserManagedBean {
+@SessionScoped
+public class UserManagedBean implements Serializable {
 
     @EJB
     private UserBeanLocal userBean;
 
-    String firstName, lastName, emailId, password, gender = "Male",profilePicture;
+    Integer userId;
+    String firstName, lastName, emailId, password, gender = "Male", profilePicture;
     BigInteger mobileNo;
     Date dob;
     Integer countryId;
     Map<String, Integer> lstCountry;
+    String uploadPath = getPath(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/images/Uploads/"));
+    List<UserTB> lstUsers;
+    UserTB user=new UserTB();
+
+    public UserTB getUser() {
+        return user;
+    }
+
+    public void setUser(UserTB user) {
+        this.user = user;
+    }
+    
+    
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -119,8 +148,24 @@ public class UserManagedBean {
 
     public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
-    }   
-    
+    }
+
+    public String getUploadPath() {
+        return uploadPath;
+    }
+
+    public void setUploadPath(String uploadPath) {
+        this.uploadPath = uploadPath;
+    }
+
+    public List<UserTB> getLstUsers() {
+        return lstUsers;
+    }
+
+    public void setLstUsers(List<UserTB> lstUsers) {
+        this.lstUsers = lstUsers;
+    }
+
     public Map<String, Integer> getLstCountry() throws SQLException {
         Map<String, Integer> TemplstCountry = new LinkedHashMap<String, Integer>();
         Connection con = null;
@@ -133,9 +178,7 @@ public class UserManagedBean {
             ResultSet rs = stmt.executeQuery("select * from countryTB order by countryName");
 
             while (rs.next()) {
-//                countryTB country = new countryTB();
-//                country.setId(rs.getInt("id"));
-//                country.setCountryName(rs.getString("countryName"));
+
                 TemplstCountry.put(rs.getString("countryName"), rs.getInt("id"));
             }
             return TemplstCountry;
@@ -184,10 +227,10 @@ public class UserManagedBean {
 
     public String insertUser() {
         try {
-                String pwdenc = sha256(password);
-                userBean.insertUser(firstName, lastName, mobileNo, emailId, pwdenc, dob, gender, countryId, new java.util.Date());
-                clearText();
-                return "/LoginRegistration.xhtml?faces-redirect=true";
+            String pwdenc = sha256(password);
+            userBean.insertUser(firstName, lastName, mobileNo, emailId, pwdenc, dob, gender, countryId, new java.util.Date());
+            clearText();
+            return "/LoginRegistration.xhtml?faces-redirect=true";
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             return null;
@@ -232,10 +275,10 @@ public class UserManagedBean {
 
             FacesMessage message = new FacesMessage(
                     "Enter valid first name");
-            context.addMessage(comp.getClientId(context), message);                       
-            
+            context.addMessage(comp.getClientId(context), message);
+
             throw new ValidatorException(message);
-        }        
+        }
     }
 
     public void validateLName(FacesContext context, UIComponent comp,
@@ -247,10 +290,14 @@ public class UserManagedBean {
             FacesMessage message = new FacesMessage(
                     "Enter valid last name");
             context.addMessage(comp.getClientId(context), message);
-            
+
             throw new ValidatorException(message);
 
         }
+    }
+
+    public String getPath(String path) {
+        return path.replaceAll("build/", "");
     }
 
     public void validateMobileNo(FacesContext context, UIComponent comp,
@@ -272,9 +319,9 @@ public class UserManagedBean {
             Object value) {
         String email = value.toString();
         String pattern = "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,4})+$";
-        
-        List<UserTB> lstUser=userBean.getUserByEmailId(email);
-        
+
+        List<UserTB> lstUser = userBean.getUserByEmailId(email);
+
         if (!email.matches(pattern)) {
 
             FacesMessage message = new FacesMessage(
@@ -282,13 +329,11 @@ public class UserManagedBean {
             context.addMessage(comp.getClientId(context), message);
 
             throw new ValidatorException(message);
-        }
-        else if(lstUser.size() > 0)
-        {
+        } else if (lstUser.size() > 0) {
             FacesMessage message = new FacesMessage(
                     "Email-ID already in use");
             context.addMessage(comp.getClientId(context), message);
-            
+
             throw new ValidatorException(message);
         }
     }
@@ -326,7 +371,8 @@ public class UserManagedBean {
 
                 firstName = user.getFName();
                 lastName = user.getLName();
-                profilePicture=user.getProfilePicture();
+                userId = user.getId();
+                profilePicture = user.getProfilePicture();
             }
         }
         //}
@@ -346,6 +392,56 @@ public class UserManagedBean {
             e.printStackTrace();
         }
         return "/LoginRegistration.xhtml?faces-redirect=true";
+    }
+
+    public void handleFileUpload(FileUploadEvent event) {
+        try {
+
+            SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyyhhmmssSSS");
+            String format = sdf.format(new java.util.Date());
+            profilePicture = format + "." + FilenameUtils.getExtension(event.getFile().getFileName());
+            uploadFile(profilePicture, event.getFile().getInputstream());
+
+            userBean.uploadPhoto(userId, profilePicture);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void uploadFile(String fileName, InputStream in) {
+        try {
+            System.out.println("path : " + uploadPath + "/" + fileName);
+            // write the inputStream to a FileOutputStream
+            try (OutputStream out = new FileOutputStream(new File(uploadPath + "/" + fileName))) {
+                int read = 0;
+                byte[] bytes = new byte[1024];
+
+                while ((read = in.read(bytes)) != -1) {
+                    out.write(bytes, 0, read);
+                }
+
+                in.close();
+                out.flush();
+            }
+
+            System.out.println("New file created!");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public List<UserTB> searchUsers(String query) {
+        List<UserTB> allUser = userBean.getAllUsers();
+        lstUsers = allUser;
+        List<UserTB> filteredUser = new ArrayList<UserTB>();
+        for (int i = 0; i < allUser.size(); i++) {
+            UserTB usr = allUser.get(i);
+            if (usr.getFName().toLowerCase().startsWith(query)) {
+                filteredUser.add(usr);
+            }
+        }
+        return filteredUser;
     }
 
     public UserManagedBean() {

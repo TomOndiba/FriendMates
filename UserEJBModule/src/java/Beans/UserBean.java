@@ -10,6 +10,7 @@ import EntityClasses.GroupTB;
 import EntityClasses.GroupTBPK;
 import EntityClasses.UserTB;
 import java.math.BigInteger;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -115,5 +116,15 @@ public class UserBean implements UserBeanLocal {
 
         return em.createNamedQuery("UserTB.findByEmailId").setParameter("emailId", emailId).getResultList();
 
+    }
+
+    @Override
+    public void uploadPhoto(Integer id, String image) {
+        
+        UserTB user=em.find(UserTB.class, id);                
+                
+        user.setProfilePicture(image);
+     
+        em.merge(user);
     }
 }

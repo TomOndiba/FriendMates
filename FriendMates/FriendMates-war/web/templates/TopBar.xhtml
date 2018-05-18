@@ -2,9 +2,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
 
-    <h:head>
+    <h:head>        
+        <style>
+
+            .ui-autocomplete-panel
+            {
+                z-index: 1031 !important;
+            }
+        </style>
     </h:head>
     <h:body>
         <header id="header">
@@ -13,14 +21,17 @@
                     <a class="navbar-brand" href="index.xhtml"><img src="../resources/images/FinalLogo.png" alt="logo" width="250px" height="70px" style="margin-top: -10px"/></a>
                 </div>
                 <div class="container">
-                    
+
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-right: -100px">
                         <h:form>
                             <ul class="nav navbar-nav navbar-right main-menu">
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="../resources/images/users/user-1.jpg" alt="user" class="profile-photo" style="border-radius: 50%;margin-top: -5px;width: 40px;height: 40px;border:2px solid #fff"/><span style="margin-left: 10px">#{userManagedBean.firstName} #{userManagedBean.lastName}</span> </a>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><h:graphicImage library="images/Uploads" name="#{userManagedBean.profilePicture}"  alt="user" class="profile-photo" style="border-radius: 50%;margin-top: -5px;width: 40px;height: 40px;border:2px solid #fff"/><span style="margin-left: 10px">#{userManagedBean.firstName} #{userManagedBean.lastName}</span> </a>
                                     <ul class="dropdown-menu newsfeed-home">
-                                        <li><h:commandLink action="#{userManagedBean.doLogout()}">Logout</h:commandLink></li>
+                                        
+                                        <li>
+                                            <h:commandLink action="#{userManagedBean.doLogout()}"><i class="fa fa-sign-out fa-5x" style="font-size: 15px;font-weight: 900 !important"></i> &nbsp; Logout</h:commandLink>
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>
@@ -28,8 +39,18 @@
                         <h:form class="navbar-form navbar-left hidden-sm">
                             <div class="form-group" style="margin-left: 30px">
                                 <i class="icon ion-android-search"></i>
-
-                                <h:inputText class="form-control" pt:placeholder="Search friends"></h:inputText>
+                                
+                                <p:autoComplete  value="#{userManagedBean.user}" var="u" inputStyleClass="form-control" inputStyle="min-width:500px" placeholder="Search friends" 
+                                                 completeMethod="#{userManagedBean.searchUsers}" 
+                                                 converter="userConverter">
+                                    <p:column style="z-index: 9999">
+                                        <h:outputText value="#{u.emailId}"></h:outputText>
+                                    </p:column>
+                                    
+                                    <p:column style="z-index: 9999">
+                                        <h:outputText value="#{u.LName}"></h:outputText>
+                                    </p:column>
+                                </p:autoComplete>
 
                                 <!--<input type="text" class="form-control" placeholder="Search friends, photos, videos"></input>-->
                             </div>

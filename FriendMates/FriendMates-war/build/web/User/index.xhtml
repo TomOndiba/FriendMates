@@ -12,14 +12,17 @@
 
             <ui:define name="content">
                 <div style="margin-top:15px">
-                    
+
                     Welcome, #{userManagedBean.emailId}
 
                 </div>
-                <p:dialog header="Upload Profile Picture" widgetVar="profileDialog" modal="true" height="100" rendered="#{empty userManagedBean.profilePicture}">
-                    <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="true"
-                                  sizeLimit="250000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
-                </p:dialog>
+                <h:form>
+                    <p:dialog header="Upload Profile Picture" widgetVar="profileDialog" modal="true" height="100" rendered="#{empty userManagedBean.profilePicture}">
+                        <p:fileUpload fileUploadListener="#{userManagedBean.handleFileUpload}" mode="advanced" dragDropSupport="true" oncomplete="PF('profileDialog').hide();location.reload();"
+                                      sizeLimit="2500000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" fileLimit="1" fileLimitMessage="You can upload only one profile picture" label="Browse">
+                        </p:fileUpload>
+                    </p:dialog>
+                </h:form>
             </ui:define>
 
         </ui:composition>

@@ -24,4 +24,5 @@ public interface UserBeanLocal {
     void deleteUser(Integer id);
     List<UserTB> getAllUsers();
     List<UserTB> getUserByEmailId(String emailId);
+    void uploadPhoto(Integer id,String image);
 }
