@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 18, 2018 at 03:23 PM
+-- Generation Time: May 20, 2018 at 01:06 PM
 -- Server version: 5.7.21-0ubuntu0.16.04.1
 -- PHP Version: 7.0.28-0ubuntu0.16.04.1
 
@@ -356,12 +356,12 @@ CREATE TABLE `groupTB` (
 
 INSERT INTO `groupTB` (`emailId`, `groupName`) VALUES
 ('akku3369@gmail.com', 'UserGroup'),
-('amikapadiya@gmail.com', 'UserGroup'),
 ('ayushi@gmail.com', 'UserGroup'),
 ('heenarana26.hr@gmail.com', 'UserGroup'),
 ('hellyhdesai@gmail.com', 'UserGroup'),
 ('heta@gmail.com', 'UserGroup'),
 ('hjariwala130896@gmail.com', 'AdminGroup'),
+('hjariwala1414@gmail.com', 'UserGroup'),
 ('mansinmodi@gmail.com', 'UserGroup'),
 ('viralidabhi22@gmail.com', 'UserGroup'),
 ('yashpatel@gmail.com', 'UserGroup');
@@ -434,6 +434,8 @@ CREATE TABLE `userTB` (
   `gender` varchar(6) DEFAULT NULL,
   `profilePicture` varchar(255) DEFAULT NULL,
   `countryId` int(11) DEFAULT NULL,
+  `isVerified` int(11) NOT NULL DEFAULT '0',
+  `verificationCode` varchar(255) DEFAULT NULL,
   `createdDate` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -441,17 +443,17 @@ CREATE TABLE `userTB` (
 -- Dumping data for table `userTB`
 --
 
-INSERT INTO `userTB` (`id`, `fName`, `lName`, `mobileNo`, `emailId`, `password`, `dob`, `gender`, `profilePicture`, `countryId`, `createdDate`) VALUES
-(1, 'Harsh', 'Jariwala', 8141484832, 'hjariwala130896@gmail.com', '60fe74406e7f353ed979f350f2fbb6a2e8690a5fa7d1b0c32983d1d8b3f95f67', '1996-08-13', 'Male', NULL, 105, '2018-04-17'),
-(2, 'Virali', 'Dabhi', 9924324178, 'viralidabhi22@gmail.com', '64b41ab6c82ec29f3d0ced26c54ceaebcb166c6ae4adb50e26b995c7324fe16a', '1996-10-30', 'Female', '18052018114000444.jpg', 105, '2018-04-17'),
-(3, 'Aakansha', 'Patel', 9904103571, 'akku3369@gmail.com', '3e16ecfa88c44efef1d838d87fa094e84e31f679927968d24eb75ad3387dfee4', '1997-02-13', 'Female', NULL, 105, '2018-04-17'),
-(4, 'Heena', 'Rana', 9429883300, 'heenarana26.hr@gmail.com', '15196013d48089771913d0975b5a41bb9d5d25d3cc2060a48fed78401864e450', '1996-09-08', 'Female', NULL, 105, '2018-04-17'),
-(5, 'Helly', 'Desai', 9825704243, 'hellyhdesai@gmail.com', '55a988fba0c45b1f34f0a62e493339703df3e0c5016314c618a3bc1474f99dc0', '2018-04-11', 'Female', NULL, 105, '2018-04-18'),
-(8, 'Ayushi', 'Vankawala', 9874563210, 'ayushi@gmail.com', '22f9f70548f30c6cdd3a8eb8664a6c43cd10404a767162822f483aa4f6cee4a4', '1997-08-27', 'Female', NULL, 105, '2018-04-18'),
-(9, 'Mansi', 'Modi', 9632587410, 'mansinmodi@gmail.com', '70c5f99bf46c467e5cfc362900a0138caae4709a4ae765d33b0430faf1859e70', '1997-02-22', 'Female', NULL, 105, '2018-04-18'),
-(10, 'Heta', 'Sheth', 1234567890, 'heta@gmail.com', '23f5eea7e0011dc26470d141ab0014325027fcacc75250dba26030f53e7f765a', '1996-10-07', 'Female', NULL, 105, '2018-04-18'),
-(11, 'Yash', 'Patel', 1234569870, 'yashpatel@gmail.com', '0b4aa33184c17d937b0b2fbbf2bf2c2b459092d76fbbf32c14d2d16c3b593c94', '2018-04-19', 'Male', NULL, 105, '2018-04-20'),
-(15, 'Ami', 'Kapadiya', 8141484832, 'amikapadiya@gmail.com', '8f9789d0f897e0d583143a9c88cfed55468ccd1712efb5f173926991e1c8b307', '2018-05-09', 'Female', NULL, 105, '2018-05-16');
+INSERT INTO `userTB` (`id`, `fName`, `lName`, `mobileNo`, `emailId`, `password`, `dob`, `gender`, `profilePicture`, `countryId`, `isVerified`, `verificationCode`, `createdDate`) VALUES
+(1, 'Harsh', 'Jariwala', 8141484832, 'hjariwala130896@gmail.com', '60fe74406e7f353ed979f350f2fbb6a2e8690a5fa7d1b0c32983d1d8b3f95f67', '1996-08-13', 'Male', NULL, 105, 1, NULL, '2018-04-17'),
+(3, 'Aakansha', 'Patel', 9904103571, 'akku3369@gmail.com', '3e16ecfa88c44efef1d838d87fa094e84e31f679927968d24eb75ad3387dfee4', '1997-02-13', 'Female', '18052018051639986.jpg', 105, 1, NULL, '2018-04-17'),
+(4, 'Heena', 'Rana', 9429883300, 'heenarana26.hr@gmail.com', '15196013d48089771913d0975b5a41bb9d5d25d3cc2060a48fed78401864e450', '1996-09-08', 'Female', NULL, 105, 0, NULL, '2018-04-17'),
+(5, 'Helly', 'Desai', 9825704243, 'hellyhdesai@gmail.com', '55a988fba0c45b1f34f0a62e493339703df3e0c5016314c618a3bc1474f99dc0', '2018-04-11', 'Female', NULL, 105, 0, NULL, '2018-04-18'),
+(8, 'Ayushi', 'Vankawala', 9874563210, 'ayushi@gmail.com', '22f9f70548f30c6cdd3a8eb8664a6c43cd10404a767162822f483aa4f6cee4a4', '1997-08-27', 'Female', NULL, 105, 0, NULL, '2018-04-18'),
+(9, 'Mansi', 'Modi', 9632587410, 'mansinmodi@gmail.com', '70c5f99bf46c467e5cfc362900a0138caae4709a4ae765d33b0430faf1859e70', '1997-02-22', 'Female', NULL, 105, 0, NULL, '2018-04-18'),
+(10, 'Heta', 'Sheth', 1234567890, 'heta@gmail.com', '23f5eea7e0011dc26470d141ab0014325027fcacc75250dba26030f53e7f765a', '1996-10-07', 'Female', NULL, 105, 0, NULL, '2018-04-18'),
+(11, 'Yash', 'Patel', 1234569870, 'yashpatel@gmail.com', '0b4aa33184c17d937b0b2fbbf2bf2c2b459092d76fbbf32c14d2d16c3b593c94', '2018-04-19', 'Male', NULL, 105, 0, NULL, '2018-04-20'),
+(21, 'Virali', 'Dabhi', 9924324178, 'viralidabhi22@gmail.com', '64b41ab6c82ec29f3d0ced26c54ceaebcb166c6ae4adb50e26b995c7324fe16a', '1996-10-30', 'Female', NULL, 105, 1, NULL, '2018-05-19'),
+(28, 'H', 'Jariwala', 8141484832, 'hjariwala1414@gmail.com', 'daef57dd7c523f76ef0522a0f5430c17fcd6a574487c320269abbd821d92fa01', '1996-08-13', 'Male', NULL, 105, 1, NULL, '2018-05-20');
 
 --
 -- Indexes for dumped tables
@@ -572,7 +574,7 @@ ALTER TABLE `postTB`
 -- AUTO_INCREMENT for table `userTB`
 --
 ALTER TABLE `userTB`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 --
 -- Constraints for dumped tables
 --
@@ -609,7 +611,7 @@ ALTER TABLE `groupChatXuserTB`
 -- Constraints for table `groupTB`
 --
 ALTER TABLE `groupTB`
-  ADD CONSTRAINT `groupTB_ibfk_1` FOREIGN KEY (`emailId`) REFERENCES `userTB` (`emailId`);
+  ADD CONSTRAINT `groupTB_ibfk_1` FOREIGN KEY (`emailId`) REFERENCES `userTB` (`emailId`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `likeTB`

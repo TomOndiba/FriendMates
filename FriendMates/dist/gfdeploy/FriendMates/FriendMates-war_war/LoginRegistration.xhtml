@@ -40,7 +40,7 @@
                 $("#lilogin").removeClass("active");
             }
 
-            
+
         </script>
         <style>
 
@@ -77,18 +77,22 @@
                 color: red;
                 padding-left: 10px;
             }
+            
+            .success td
+            {
+                color: forestgreen;
+                padding-left: 10px;
+            }
 
         </style>
     </h:head>
     <h:body>
-
-
-        <!--Landing Page Contents--> 
         <div id="lp-register">
-            <div class="container wrapper">
+            <div class="container wrapper" style="margin-top: 40px !important;padding-bottom: 40px !important;padding-top: 0px !important">
                 <div class="row">
                     <div class="col-sm-5">
                         <div class="intro-texts">
+                            <h:graphicImage library="images" name="FinalLogo.png" alt="logo" width="550px" height="175px" style="margin-left: -100px !important"></h:graphicImage><br> </br>
                             <h1 class="text-white">Make Cool Friends !!!</h1>
                             <p>FriendMates is a social network portal that can be used to connect people.  <br /> </p>
 
@@ -233,7 +237,8 @@
 
                                     </h:form>
                                     <p ></p>
-                                    <h:messages class="error"  globalOnly="true" layout="table"/>
+                                    <h:messages class="error"  globalOnly="true" layout="table" rendered="#{userManagedBean.isMailSent eq false}"/>
+                                    <h:messages class="success"  globalOnly="true" layout="table" rendered="#{userManagedBean.isMailSent eq true}"/>
                                     <!--Login Form Ends--> 
                                     <p style="padding-left: 10px"><a href="#">Forgot Password?</a><br></br>
                                         <a href="#register" data-toggle="tab" onclick="changetab()">Not yet registered?</a></p>

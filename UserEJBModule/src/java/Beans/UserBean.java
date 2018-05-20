@@ -119,12 +119,46 @@ public class UserBean implements UserBeanLocal {
     }
 
     @Override
+    public List<UserTB> getUserById(Integer id) {
+        return em.createNamedQuery("UserTB.findById").setParameter("id", id).getResultList();
+    }
+    
+    
+
+    @Override
     public void uploadPhoto(Integer id, String image) {
-        
-        UserTB user=em.find(UserTB.class, id);                
-                
+
+        UserTB user = em.find(UserTB.class, id);
+
         user.setProfilePicture(image);
-     
+
         em.merge(user);
+    }
+
+    @Override
+    public void updateVerificationCode(Integer id, String code) {
+
+        UserTB user = em.find(UserTB.class, id);
+
+        user.setVerificationCode(code);
+
+        em.merge(user);
+    }
+
+    @Override
+    public void updateVerificationCodeAndStatus(Integer id) {
+        
+        UserTB user=em.find(UserTB.class, id);
+        
+        user.setVerificationCode(null);
+        user.setIsVerified(1);
+        
+        em.merge(user);
+    }
+
+    @Override
+    public List<UserTB> getUserByVerificationCodeAndEmail(String code, String emailId) {
+        
+        return em.createNamedQuery("UserTB.findByVerificationCodeAndEmailId").setParameter("verificationCode", code).setParameter("emailId", emailId).getResultList();
     }
 }

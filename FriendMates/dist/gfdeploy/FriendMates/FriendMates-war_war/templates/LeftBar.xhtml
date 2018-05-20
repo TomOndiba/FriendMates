@@ -9,7 +9,8 @@
         <h:form>
             <div class="col-md-3 static">
                 <div class="profile-card" style="height: 50px;margin-top:15px">
-                    <h:graphicImage library="images/Uploads" name="#{userManagedBean.profilePicture}"  alt="user" class="profile-photo"  />
+                    <h:graphicImage library="images/Uploads" name="#{userManagedBean.profilePicture}"  alt="user" class="profile-photo"  rendered="#{not empty userManagedBean.profilePicture}"/>
+                    <h:graphicImage library="images/Uploads" name="NoImage.png"  alt="user" class="profile-photo"  rendered="#{empty userManagedBean.profilePicture}"/>
                     <h5><b><h:commandLink action="/User/index.xhtml?faces-redirect=true" style="text-decoration: none;color: white">#{userManagedBean.firstName} #{userManagedBean.lastName}</h:commandLink></b></h5>                
                 </div><!--profile card ends-->
                 <ul class="nav-news-feed">

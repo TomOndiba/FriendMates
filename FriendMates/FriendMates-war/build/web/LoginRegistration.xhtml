@@ -22,7 +22,6 @@
         <h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
         <h:outputStylesheet library="css" name="ionicons.min.css"></h:outputStylesheet>
         <h:outputStylesheet library="css" name="font-awesome.min.css"></h:outputStylesheet>
-
         <!--<link rel="stylesheet" href="../resources/css/bootstrap.min.css" />
                 <link rel="stylesheet" href="../resources/css/style.css" />
                 <link rel="stylesheet" href="../resources/css/ionicons.min.css" />
@@ -40,7 +39,7 @@
                 $("#lilogin").removeClass("active");
             }
 
-            
+
         </script>
         <style>
 
@@ -78,17 +77,21 @@
                 padding-left: 10px;
             }
 
+            .success td
+            {
+                color: forestgreen;
+                padding-left: 10px;
+            }
+
         </style>
     </h:head>
     <h:body>
-
-
-        <!--Landing Page Contents--> 
         <div id="lp-register">
-            <div class="container wrapper">
+            <div class="container wrapper" style="margin-top: 40px !important;padding-bottom: 40px !important;padding-top: 0px !important">
                 <div class="row">
                     <div class="col-sm-5">
                         <div class="intro-texts">
+                            <h:graphicImage library="images" name="FinalLogo.png" alt="logo" width="550px" height="175px" style="margin-left: -100px !important"></h:graphicImage><br> </br>
                             <h1 class="text-white">Make Cool Friends !!!</h1>
                             <p>FriendMates is a social network portal that can be used to connect people.  <br /> </p>
 
@@ -168,7 +171,7 @@
                                         <div class="row">
                                             <div class="form-group col-sm-6 col-xs-12 " >
                                                 <p class="birth"><strong>Date of Birth</strong></p>
-                                                <p:calendar id="dob" value="#{userManagedBean.dob}" mask="true" pattern="yyyy-MM-dd" placeholder="yyyy-MM-dd" maskAutoClear="true" required="true" converterMessage="Select valid date" effect="slideDown" requiredMessage="Select valid date">
+                                                <p:calendar maskSlotChar="yyyy-MM-dd" id="dob" value="#{userManagedBean.dob}" mask="true" pattern="yyyy-MM-dd" placeholder="yyyy-MM-dd" maskAutoClear="true" required="true" converterMessage="Select valid date" effect="clip" requiredMessage="Select valid date">
                                                     <p:ajax event="blur" update="msgDob" ></p:ajax>
                                                     <p:ajax event="dateSelect" update="msgDob" ></p:ajax>
                                                 </p:calendar>
@@ -215,6 +218,7 @@
                                                 <h:outputLabel for="email" class="sr-only" value="Email"></h:outputLabel>
                                                 <h:inputText id="email" class="form-control input-group-lg" label="Email" title="Enter Email" pt:placeholder="Your Email" value="#{userManagedBean.emailId}" required="true" requiredMessage="Email-ID is mendatory">
                                                     <p:ajax event="keyup" update="msgEmail"></p:ajax>
+                                                    <p:ajax event="blur" update="msgEmail"></p:ajax>
                                                 </h:inputText>
                                                 <h:message for="email" style="color: red;padding-left: 15px" id="msgEmail"></h:message>
                                             </div>
@@ -224,16 +228,21 @@
                                                 <h:outputLabel for="password" class="sr-only" value="Password"></h:outputLabel>
                                                 <h:inputSecret id="password" class="form-control input-group-lg" label="password" title="Enter password" pt:placeholder="Password" value="#{userManagedBean.password}" required="true" requiredMessage="Password is mendatory">
                                                     <p:ajax event="keyup" update="msgPassword"></p:ajax>
+                                                    <p:ajax event="blur" update="msgPassword"></p:ajax>
                                                 </h:inputSecret>
                                                 <h:message for="password" style="color: red;padding-left: 15px" id="msgPassword"></h:message>
                                             </div>
                                         </div>
 
-                                        <h:commandButton class="btn btn-primary" action="#{userManagedBean.doLogin()}" value="Login Now"></h:commandButton>
-
+                                        <h:commandButton class="btn btn-primary" action="#{userManagedBean.doLogin()}" value="Login Now">
+                                            <f:ajax execute="@form" render="@form" />
+                                        </h:commandButton>
+                                        <p ></p>
+                                        <h:messages class="error"  globalOnly="true" layout="table" rendered="#{userManagedBean.isMailSent eq false}"/>
+                                        <h:messages class="success"  globalOnly="true" layout="table" rendered="#{userManagedBean.isMailSent eq true}"/>
                                     </h:form>
-                                    <p ></p>
-                                    <h:messages class="error"  globalOnly="true" layout="table"/>
+                                    
+
                                     <!--Login Form Ends--> 
                                     <p style="padding-left: 10px"><a href="#">Forgot Password?</a><br></br>
                                         <a href="#register" data-toggle="tab" onclick="changetab()">Not yet registered?</a></p>

@@ -8,6 +8,7 @@ package Classes;
 import Beans.UserBeanLocal;
 import EntityClasses.UserTB;
 import ManagedBeans.UserManagedBean;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -28,10 +29,16 @@ public class userConverter implements Converter {
     
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        if (value != null && value.trim().length() > 0) {
+       if (value != null && value.trim().length() > 0) {
             try {
-                // UserManagedBean uben=(UserManagedBean)context.getExternalContext().getApplicationMap().get("userManagedBean");
-                return ubean.getAllUsers().get(Integer.parseInt(value));
+                List<UserTB> temp = ubean.getUserById(Integer.parseInt(value));
+                UserTB u = new UserTB();
+                for (UserTB usr : temp) {
+                    u=usr;
+                }
+
+                int in = ubean.getAllUsers().indexOf(u);
+                return ubean.getAllUsers().get(in);
 
             } catch (Exception e) {
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", "Not a valid User."));
@@ -44,9 +51,10 @@ public class userConverter implements Converter {
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         if (value != null) {
-            
-            return String.valueOf(((UserTB)value).getId());
-            //return ((UserTB) value).getId().toString();
+
+            UserManagedBean u = new UserManagedBean();
+            u.setSelected((UserTB) value);
+            return String.valueOf(((UserTB) value).getId());
         } else {
             return null;
         }

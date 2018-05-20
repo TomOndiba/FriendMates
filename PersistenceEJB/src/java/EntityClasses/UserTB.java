@@ -25,6 +25,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -47,8 +48,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "UserTB.findByDob", query = "SELECT u FROM UserTB u WHERE u.dob = :dob"),
     @NamedQuery(name = "UserTB.findByGender", query = "SELECT u FROM UserTB u WHERE u.gender = :gender"),
     @NamedQuery(name = "UserTB.findByProfilePicture", query = "SELECT u FROM UserTB u WHERE u.profilePicture = :profilePicture"),
+    @NamedQuery(name = "UserTB.findByIsVerified", query = "SELECT u FROM UserTB u WHERE u.isVerified = :isVerified"),
+    @NamedQuery(name = "UserTB.findByVerificationCode", query = "SELECT u FROM UserTB u WHERE u.verificationCode = :verificationCode"),
+    @NamedQuery(name = "UserTB.findByVerificationCodeAndEmailId", query = "SELECT u FROM UserTB u WHERE u.verificationCode = :verificationCode AND u.emailId = :emailId"),
     @NamedQuery(name = "UserTB.findByCreatedDate", query = "SELECT u FROM UserTB u WHERE u.createdDate = :createdDate")})
 public class UserTB implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,6 +83,13 @@ public class UserTB implements Serializable {
     @Size(max = 255)
     @Column(name = "profilePicture")
     private String profilePicture;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "isVerified")
+    private int isVerified;
+    @Size(max = 255)
+    @Column(name = "verificationCode")
+    private String verificationCode;
     @Column(name = "createdDate")
     @Temporal(TemporalType.DATE)
     private Date createdDate;
@@ -110,6 +122,11 @@ public class UserTB implements Serializable {
 
     public UserTB(Integer id) {
         this.id = id;
+    }
+
+    public UserTB(Integer id, int isVerified) {
+        this.id = id;
+        this.isVerified = isVerified;
     }
 
     public Integer getId() {
@@ -182,6 +199,22 @@ public class UserTB implements Serializable {
 
     public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
+    }
+
+    public int getIsVerified() {
+        return isVerified;
+    }
+
+    public void setIsVerified(int isVerified) {
+        this.isVerified = isVerified;
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
     }
 
     public Date getCreatedDate() {
@@ -314,5 +347,5 @@ public class UserTB implements Serializable {
     public String toString() {
         return "EntityClasses.UserTB[ id=" + id + " ]";
     }
-    
+
 }

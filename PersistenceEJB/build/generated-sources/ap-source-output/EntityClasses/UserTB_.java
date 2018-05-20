@@ -15,7 +15,7 @@ import javax.persistence.metamodel.CollectionAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2018-05-17T11:33:39")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2018-05-20T01:39:26")
 @StaticMetamodel(UserTB.class)
 public class UserTB_ { 
 
@@ -24,9 +24,11 @@ public class UserTB_ {
     public static volatile CollectionAttribute<UserTB, GroupTB> groupTBCollection;
     public static volatile SingularAttribute<UserTB, String> gender;
     public static volatile CollectionAttribute<UserTB, MessageTB> messageTBCollection1;
+    public static volatile SingularAttribute<UserTB, Integer> isVerified;
     public static volatile SingularAttribute<UserTB, String> emailId;
     public static volatile SingularAttribute<UserTB, BigInteger> mobileNo;
     public static volatile SingularAttribute<UserTB, CountryTB> countryId;
+    public static volatile SingularAttribute<UserTB, String> verificationCode;
     public static volatile CollectionAttribute<UserTB, PostTB> postTBCollection;
     public static volatile SingularAttribute<UserTB, String> profilePicture;
     public static volatile SingularAttribute<UserTB, String> password;

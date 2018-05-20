@@ -5,28 +5,23 @@
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:p="http://primefaces.org/ui">
 
-    <h:head>
+    <h:head>        
         <style>
 
-            .ui-inputfield
+            .ui-autocomplete-panel
             {
-                background: rgba(255,255,255, 0.2);
-                border: 0;
-                box-shadow: none;
-                min-width: 235px;
-                color: #fff;
-                height: 26px;
-                border-radius: 13px;
-                font-size: 13px;
-                padding-left: 30px;
+                z-index: 1031 !important;
             }
+
         </style>
     </h:head>
     <h:body>
         <header id="header">
             <nav class="navbar navbar-default navbar-fixed-top menu">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="index.xhtml"><img src="../resources/images/FinalLogo.png" alt="logo" width="250px" height="70px" style="margin-top: -10px"/></a>
+                    <h:form>
+                        <h:commandLink class="navbar-brand" action="/User/index.xhtml?faces-redirect=true"><h:graphicImage library="images" name="FinalLogo.png" alt="logo" width="250px" height="70px"  style="margin-top: -23px !important"></h:graphicImage></h:commandLink> 
+                    </h:form>
                 </div>
                 <div class="container">
 
@@ -34,25 +29,31 @@
                         <h:form>
                             <ul class="nav navbar-nav navbar-right main-menu">
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><h:graphicImage library="images/Uploads" name="#{userManagedBean.profilePicture}"  alt="user" class="profile-photo" style="border-radius: 50%;margin-top: -5px;width: 40px;height: 40px;border:2px solid #fff"/><span style="margin-left: 10px">#{userManagedBean.firstName} #{userManagedBean.lastName}</span> </a>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <h:graphicImage library="images/Uploads" name="#{userManagedBean.profilePicture}"  alt="user" class="profile-photo"  rendered="#{not empty userManagedBean.profilePicture}" style="border-radius: 50%;margin-top: -5px;width: 40px;height: 40px;border:2px solid #fff"/>
+                                        <h:graphicImage library="images/Uploads" name="NoImage.png"  alt="user" class="profile-photo"  rendered="#{empty userManagedBean.profilePicture}" style="border-radius: 50%;margin-top: -5px;width: 40px;height: 40px;border:2px solid #fff"/><span style="margin-left: 10px">#{userManagedBean.firstName} #{userManagedBean.lastName}</span> 
+                                    </a>
                                     <ul class="dropdown-menu newsfeed-home">
-                                        <li><h:commandLink action="#{userManagedBean.doLogout()}">Logout</h:commandLink></li>
+
+                                        <li>
+                                            <h:commandLink action="#{userManagedBean.doLogout()}"><i class="fa fa-sign-out fa-5x" style="font-size: 15px;font-weight: 900 !important"></i> &nbsp; Logout</h:commandLink>
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>
                         </h:form>
                         <h:form class="navbar-form navbar-left hidden-sm">
                             <div class="form-group" style="margin-left: 30px">
-                                <!--<i class="icon ion-android-search"></i>-->
-                                <p:outputLabel value="Custom Content:" />
-                                <p:autoComplete  value="#{userManagedBean.lstUsers}" var="u"
+                                <i class="icon ion-android-search"></i>
+
+                                <p:autoComplete  value="#{userManagedBean.user}" var="u" inputStyleClass="form-control" inputStyle="min-width:500px" placeholder="Search friends" 
                                                  completeMethod="#{userManagedBean.searchUsers}" 
-                                                 itemLabel="#{u.FName}" itemValue="#{u}" converter="userConverter">
-                                    <p:column>
+                                                 converter="userConverter">
+                                    <p:column style="z-index: 9999">
                                         <h:outputText value="#{u.emailId}"></h:outputText>
                                     </p:column>
-                                    
-                                    <p:column>
+
+                                    <p:column style="z-index: 9999">
                                         <h:outputText value="#{u.LName}"></h:outputText>
                                     </p:column>
                                 </p:autoComplete>

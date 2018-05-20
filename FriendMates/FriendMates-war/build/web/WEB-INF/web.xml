@@ -36,7 +36,7 @@
     </session-config>
     <context-param>
         <param-name>primefaces.THEME</param-name>
-        <param-value>delta</param-value>
+        <param-value>#{userManagedBean.theme}</param-value>
     </context-param>
     <welcome-file-list>
         <welcome-file>faces/LoginRegistration.xhtml</welcome-file>
