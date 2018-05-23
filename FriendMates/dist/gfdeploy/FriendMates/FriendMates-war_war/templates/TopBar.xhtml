@@ -3,21 +3,89 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <h:head>        
+    <h:head> 
+        <h:outputStylesheet library="css" name="animate.css"></h:outputStylesheet>
         <style>
 
             .ui-autocomplete-panel
             {
                 z-index: 1031 !important;
+                border-top-left-radius: 0px !important;
+                border-top-right-radius: 0px !important;
+                border-bottom-left-radius: 0px !important;
+                border-bottom-right-radius: 10px !important;
             }
 
+            .ui-autocomplete-panel .ui-autocomplete-table th:hover,
+            .ui-autocomplete-panel .ui-autocomplete-table td:hover{
+
+                transform:perspective(5000px) translatez(19px);
+                box-shadow:0px 0px 15px 2px #000000 !important;
+                -webkit-box-shadow:0px 0px 10px 1px #000000 !important;
+                -moz-box-shadow:0px 0px 15px 2px #000000 !important;
+                overflow-x: hidden !important;
+                color: #fff;
+                font-weight: bolder;
+                background:linear-gradient(to right,#0b8793 50%, #360033 100%);
+            }
+
+            .ui-state-highlight, 
+            .ui-widget-content .ui-state-highlight, 
+            .ui-widget-header .ui-state-highlight
+            {
+
+                border:1px solid #cccccc !important;
+                background: #F2F1F1 repeat-x scroll 0 0 !important;
+                color: #222222 !important;
+            }
+
+            a:hover
+            {
+                color: white !important;
+                text-decoration-style: none !important;
+            }
+            .nav.navbar-nav.navbar-right.main-menu :hover {
+                color: white !important;
+                //transform:perspective(5000px) translatey(-10px);
+            }
+            .menu ul.main-menu li.open a, .menu ul.main-menu li.open a:active, .menu ul.main-menu li.open a:focus
+            {
+
+                color: white !important;
+
+
+            }
+            .nav > li > a {
+                position: relative;
+                display: block;
+                padding: 10px 36px 20px 0px;
+            }
+
+            .menu ul.main-menu li.dropdown a:hover, .menu ul.main-menu li.dropdown a:active, .menu ul.main-menu li.dropdown a:focus {
+
+                color: white !important;
+            }
+
+            #first li:first-child:before
+            {
+                content: none;                  /* Pseudo-element has no content    */
+                position: absolute;             /* It's positioned absolutely       */
+                width: 1px;                     /* It has a width of 1 pixel        */
+                height: 1px;                    /* And a height of 1 pixel too      */
+                border: 5px solid transparent;  /* Applies initial border style     */
+                border-bottom-color: #313131;   /* Overrides bottom border color    */
+                left: 50%;                      /* Moves it half-way from the left  */
+                top: -10px;                     /* And 10px up above the element    */
+                margin-left: -5px;              /* Margin, half of width, to center */
+            }
         </style>
     </h:head>
-    <h:body>
+    <h:body onload="#{friendRequestManagedBean.countFriendRequests()}">
         <header id="header">
-            <nav class="navbar navbar-default navbar-fixed-top menu">
+            <nav class="navbar navbar-default navbar-fixed-top menu" style="background-color: #360033;background-image: -webkit-gradient(linear, left top, right top, from(#360033), to(#0b8793));background-image: -webkit-linear-gradient(left, #360033, #0b8793);background-image: -moz-linear-gradient(left, #360033, #0b8793);background-image: -ms-linear-gradient(left, #360033, #0b8793);background-image: -o-linear-gradient(left, #360033, #0b8793);background-image: linear-gradient(left, #360033, #0b8793);filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#360033', endColorstr='#0b8793', gradientType='1');">
                 <div class="navbar-header">
                     <h:form>
                         <h:commandLink class="navbar-brand" action="/User/index.xhtml?faces-redirect=true"><h:graphicImage library="images" name="FinalLogo.png" alt="logo" width="250px" height="70px"  style="margin-top: -23px !important"></h:graphicImage></h:commandLink> 
@@ -27,38 +95,52 @@
 
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-right: -100px">
                         <h:form>
-                            <ul class="nav navbar-nav navbar-right main-menu">
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                        <h:graphicImage library="images/Uploads" name="#{userManagedBean.profilePicture}"  alt="user" class="profile-photo"  rendered="#{not empty userManagedBean.profilePicture}" style="border-radius: 50%;margin-top: -5px;width: 40px;height: 40px;border:2px solid #fff"/>
-                                        <h:graphicImage library="images/Uploads" name="NoImage.png"  alt="user" class="profile-photo"  rendered="#{empty userManagedBean.profilePicture}" style="border-radius: 50%;margin-top: -5px;width: 40px;height: 40px;border:2px solid #fff"/><span style="margin-left: 10px">#{userManagedBean.firstName} #{userManagedBean.lastName}</span> 
-                                    </a>
-                                    <ul class="dropdown-menu newsfeed-home">
+                            <p:outputPanel id="requestPanel">
+                                <ul class="nav navbar-nav navbar-right main-menu">
 
-                                        <li>
-                                            <h:commandLink action="#{userManagedBean.doLogout()}"><i class="fa fa-sign-out fa-5x" style="font-size: 15px;font-weight: 900 !important"></i> &nbsp; Logout</h:commandLink>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
+                                    <li id="first" class="dropdown" >
+                                        <a title="Friend Requests" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" >
+                                            <span class="fa fa-user fa-2x"><h:outputLabel class="badge" style="background-color: red;margin-left: -5px;margin-bottom: 13px;margin-top: -18px" rendered="#{friendRequestManagedBean.countRequest ne 0}">#{friendRequestManagedBean.countRequest}</h:outputLabel></span>
+                                        </a>
+
+                                        <ul class="dropdown-menu newsfeed-home" >
+
+                                            <li style="position: absolute;list-style-type: none;padding: 5;margin: 5px;background-color: #ffffff;-webkit-animation-duration: .5s;-moz-animation-duration: .5s;animation-duration: .5s;-webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);-moz-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);animation-name: fadeInDown;">
+                                                <h:commandLink action="#{userManagedBean.doLogout()}" style="color: #000000 !important"><i class="fa fa-sign-out fa-5x" style="font-size: 15px;font-weight: 900 !important"></i> &nbsp; Logout</h:commandLink>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" >
+                                            <h:graphicImage library="images/Uploads" name="#{userManagedBean.profilePicture}"  alt="user" class="profile-photo"  rendered="#{not empty userManagedBean.profilePicture}" style="border-radius: 50%;margin-top: -5px;width: 40px;height: 40px;border:2px solid #fff"/>
+                                            <h:graphicImage library="images/Uploads" name="NoImage.png"  alt="user" class="profile-photo"  rendered="#{empty userManagedBean.profilePicture}" style="border-radius: 50%;margin-top: -5px;width: 40px;height: 40px;border:2px solid #fff"/><span class="linkName" style="margin-left: 10px">#{userManagedBean.firstName} #{userManagedBean.lastName}</span> 
+                                            <span class="fa fa-angle-down"></span>
+                                        </a>
+                                        <ul class="dropdown-menu newsfeed-home" style="z-index:1031 !important">
+
+                                            <li>
+                                                <h:commandLink action="#{userManagedBean.doLogout()}"><i class="fa fa-sign-out fa-5x" style="font-size: 15px;font-weight: 900 !important"></i> &nbsp; Logout</h:commandLink>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <p:poll interval="60" listener="#{friendRequestManagedBean.countFriendRequests()}" update="requestPanel"></p:poll>
+                            </p:outputPanel>
                         </h:form>
                         <h:form class="navbar-form navbar-left hidden-sm">
                             <div class="form-group" style="margin-left: 30px">
                                 <i class="icon ion-android-search"></i>
 
-                                <p:autoComplete  value="#{userManagedBean.user}" var="u" inputStyleClass="form-control" inputStyle="min-width:500px" placeholder="Search friends" 
-                                                 completeMethod="#{userManagedBean.searchUsers}" 
-                                                 converter="userConverter">
-                                    <p:column style="z-index: 9999">
-                                        <h:outputText value="#{u.emailId}"></h:outputText>
-                                    </p:column>
-
-                                    <p:column style="z-index: 9999">
-                                        <h:outputText value="#{u.LName}"></h:outputText>
+                                <p:autoComplete id="temp"  value="#{userManagedBean.user}" var="u" inputStyleClass="form-control" inputStyle="min-width:500px" placeholder="Search friends" 
+                                                completeMethod="#{userManagedBean.searchUsers}" effect="blind" effectDuration="500"
+                                                converter="userConverter" itemValue="#{u}" converterMessage="*. not valid"  forceSelection="true">
+                                    <p:ajax listener="#{userManagedBean.selectedUser}" event="itemSelect" process="@this" ></p:ajax>
+                                    <p:column style="z-index: 9999;border-right-style: hidden">
+                                        <h:graphicImage rendered="#{empty u.profilePicture}" library="images/Uploads" name="NoImage.png"  alt="user" class="profile-photo" />
+                                        <h:graphicImage rendered="#{not empty u.profilePicture}" library="images/Uploads" name="#{u.profilePicture}"  alt="user" class="profile-photo" />
+                                        &nbsp; <h:outputText value="#{u.FName} #{u.LName}"></h:outputText>
                                     </p:column>
                                 </p:autoComplete>
-
-                                <!--<input type="text" class="form-control" placeholder="Search friends, photos, videos"></input>-->
                             </div>
                         </h:form>
                     </div>
@@ -66,5 +148,6 @@
             </nav>
         </header>
     </h:body>
+    <h:outputScript library="js" name="dropdownhover.js"></h:outputScript>
 </html>
 

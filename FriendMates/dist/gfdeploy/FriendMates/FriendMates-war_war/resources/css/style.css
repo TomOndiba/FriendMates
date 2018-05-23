@@ -63,11 +63,11 @@ body{
 
 @font-face {
     font-family:"Agency FB";
-    src: url("../fonts/agency-fb.eot") /* EOT file for IE */
+    src: url("../resources/fonts/agency-fb.eot") /* EOT file for IE */
 }
 @font-face {
     font-family:"Agency FB";
-    src: url("../fonts/agency-fb.ttf") /* TTF file for CSS3 browsers */
+    src: url("../resources/fonts/agency-fb.ttf") /* TTF file for CSS3 browsers */
 }
 
 h1, h2, h3, h4, h5, h6{color: #27aae1;}
@@ -242,7 +242,7 @@ ul{
 }
 
 ul li{
-  list-style-image: url("../images/bullet.png");
+  list-style-image: url("../resources/images/bullet.png");
 }
 
 .line{
@@ -391,7 +391,10 @@ textarea{
   min-width: 235px;
   color: #fff;
   height: 26px;
-  border-radius: 13px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
   font-size: 13px;
   padding-left: 30px;
 }
@@ -493,7 +496,7 @@ textarea{
   ==================================================*/
 
 #banner{
-	background: url(../images/bg/bg-1.jpg) fixed no-repeat;
+	background: url(../resources/images/bg/bg-1.jpg) fixed no-repeat;
   background-position: center;
 	background-size: cover;
 	width: 100%;
@@ -600,7 +603,7 @@ textarea{
 }
 
 #features .feature-item .feature-icon{
-  background: linear-gradient(to bottom, rgba(43,57,144,.8), rgba(39,170,225,.8) 65%), url("../images/blur.png") no-repeat;
+  background: linear-gradient(to bottom, rgba(43,57,144,.8), rgba(39,170,225,.8) 65%), url("../resources/images/blur.png") no-repeat;
   background-size: cover;
   background-position: center;
   width: 110px;
@@ -703,7 +706,7 @@ textarea{
   ==================================================*/
 
 .img-divider{
-  background: url("../images/bg/bg-2.jpg") no-repeat;
+  background: url("../resources/images/bg/bg-2.jpg") no-repeat;
   background-size: cover;
   text-align: center;
   min-height: 460px;
@@ -716,7 +719,7 @@ textarea{
   ==================================================*/
 
 #site-facts{
-	background: radial-gradient(rgba(0, 0, 0, 0.7) 40%, rgba(0, 0, 0, 1) 100%), url("../images/bg/bg-4.jpg") fixed no-repeat;
+	background: radial-gradient(rgba(0, 0, 0, 0.7) 40%, rgba(0, 0, 0, 1) 100%), url("../resources/images/bg/bg-4.jpg") fixed no-repeat;
 	background-size: cover;
 	height: 500px !important;
 	text-align: center;
@@ -814,7 +817,7 @@ textarea{
   ==================================================*/  
 
 #lp-register{
-  background: linear-gradient(to right, rgba(0,0,0, 0.7) , rgba(0,0,0, 0.7)), url(images/bg/bg-3.jpg) fixed no-repeat;
+  background: linear-gradient(to right, rgba(0,0,0, 0.7) , rgba(0,0,0, 0.7)), url(../resources/images/bg/bg-3.jpg) fixed no-repeat;
   background-size: cover;
   background-position: center;
   position: absolute;
@@ -974,7 +977,7 @@ textarea{
 }
 
 #registration_form select.form-control{
-  background: rgba(0, 0, 0, 0) url("../images/down-arrow.png") no-repeat scroll calc(100% - 10px) center / 8px auto;
+  background: rgba(0, 0, 0, 0) url("../resources/images/down-arrow.png") no-repeat scroll calc(100% - 10px) center / 8px auto;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -1017,7 +1020,7 @@ textarea{
 /*Profile Card CSS*/
 
 .profile-card{
-  background: linear-gradient(to bottom, rgba(39,170,225,.8), rgba(28,117,188,.8)), url(../images/covers/1.jpg) no-repeat;
+  background: linear-gradient(to bottom, rgba(39,170,225,.8), rgba(28,117,188,.8)), url(../resources/images/covers/1.jpg) no-repeat;
   background-size: cover;
   width: 100%;
   min-height: 90px;
@@ -1540,7 +1543,7 @@ ul.online-users li span.online-dot{
   ==================================================*/
 
 .timeline-cover{
-  background: url("../images/covers/1.jpg") no-repeat;
+  background: url("../resources/images/covers/1.jpg") no-repeat;
   background-position: center;
   background-size: cover;
   min-height: 360px;
@@ -1873,7 +1876,7 @@ ul.edit-menu li.active a{
 }
 
 .edit-block select.form-control{
-  background: rgba(0, 0, 0, 0) url(../images/down-arrow.png) no-repeat scroll calc(100% - 10px) center / 8px auto;
+  background: rgba(0, 0, 0, 0) url(../resources/images/down-arrow.png) no-repeat scroll calc(100% - 10px) center / 8px auto;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -2048,7 +2051,7 @@ input:checked + .slider:before{
   ==================================================*/
 
 .page-title-section.faq{
-  background: linear-gradient(to right, rgba(0,0,0, 0.5) , rgba(0,0,0, 0.5)), url("../images/bg/bg-5.jpg") fixed no-repeat;
+  background: linear-gradient(to right, rgba(0,0,0, 0.5) , rgba(0,0,0, 0.5)), url("../resources/images/bg/bg-5.jpg") fixed no-repeat;
   background-size: cover;
   background-position: center;
   padding: 90px 0 110px;
@@ -2267,7 +2270,7 @@ input:checked + .slider:before{
 
 #footer::before{
   content: "";
-  background: linear-gradient(to right, #ffffff 0%,#53cbf1 50%,#ffffff 100%);
+  background: linear-gradient(to right, #ffffff 0%,#360033 50%,#ffffff 100%);
   height: 5px;
   width: 100%;
   position: absolute;

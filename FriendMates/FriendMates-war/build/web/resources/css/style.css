@@ -391,7 +391,10 @@ textarea{
   min-width: 235px;
   color: #fff;
   height: 26px;
-  border-radius: 13px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
   font-size: 13px;
   padding-left: 30px;
 }
@@ -401,19 +404,19 @@ textarea{
 }
 
 .menu ul.main-menu li.dropdown a{
-  color: #fff;
+  color: white;
   font-size: 13px;
   font-weight: 600;
 }
 
 .menu ul.main-menu li.dropdown a:hover, .menu ul.main-menu li.dropdown a:active, .menu ul.main-menu li.dropdown a:focus{
-  color: #27aae1;
+  color: white;
   background: none;
 }
 
 .menu ul.main-menu li.open a, .menu ul.main-menu li.open a:active, .menu ul.main-menu li.open a:focus{
   background: transparent;
-  color: #27aae1;
+  color: white;
 }
 
 .menu ul.main-menu li ul.dropdown-menu{
@@ -430,13 +433,13 @@ textarea{
 }
 
 .menu ul.main-menu li ul.dropdown-menu li a, .menu ul.main-menu li.open ul.dropdown-menu li a{
-  color: #fff;
+  color: white;
   font-size: 13px;
   line-height: 16px;
 }
 
 .menu ul.main-menu li ul.dropdown-menu li a:hover, .menu ul.main-menu li.open ul.dropdown-menu li a:hover{
-  color: #e6e6e6;
+  color: white;
 }
 
 .navbar-default .navbar-collapse, .navbar-default .navbar-form{

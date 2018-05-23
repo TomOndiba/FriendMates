@@ -205,7 +205,19 @@ exists or setup the property manually. For example like this:
             <property location="${build.dir}" name="dist.ear.dir"/>
             <property name="deploy.on.save" value="${build.deploy.on.save}"/>
         </ant>
+        <ant antfile="${project.FriendEJBModule}/build.xml" inheritall="false" target="dist-ear">
+            <property location="${build.dir}" name="dist.ear.dir"/>
+            <property name="deploy.on.save" value="${build.deploy.on.save}"/>
+        </ant>
         <ant antfile="${project.FriendMates-war}/build.xml" inheritall="false" target="dist-ear">
+            <property location="${build.dir}" name="dist.ear.dir"/>
+            <property name="deploy.on.save" value="${build.deploy.on.save}"/>
+        </ant>
+        <ant antfile="${project.FriendRequestEJBModule}/build.xml" inheritall="false" target="dist-ear">
+            <property location="${build.dir}" name="dist.ear.dir"/>
+            <property name="deploy.on.save" value="${build.deploy.on.save}"/>
+        </ant>
+        <ant antfile="${project.FriendRequestEJBModule-1}/build.xml" inheritall="false" target="dist-ear">
             <property location="${build.dir}" name="dist.ear.dir"/>
             <property name="deploy.on.save" value="${build.deploy.on.save}"/>
         </ant>
@@ -258,6 +270,9 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${reference.MessageEJBModule.dist-ear}" todir="${build.dir}//"/>
         <copyfiles files="${reference.GroupChatXUserEJBModule.dist-ear}" todir="${build.dir}//"/>
         <copyfiles files="${reference.CommentsEJBModule.dist-ear}" todir="${build.dir}//"/>
+        <copyfiles files="${reference.FriendRequestEJBModule.dist-ear}" todir="${build.dir}//"/>
+        <copyfiles files="${reference.FriendRequestEJBModule-1.dist-ear}" todir="${build.dir}//"/>
+        <copyfiles files="${reference.FriendEJBModule.dist-ear}" todir="${build.dir}//"/>
     </target>
     <target name="post-compile">
         <!-- Empty placeholder for easier customization. -->
@@ -335,7 +350,10 @@ exists or setup the property manually. For example like this:
     <target name="-run-deploy-am" unless="no.deps">
         <!-- Task to deploy to the Access Manager runtime. -->
         <ant antfile="${project.CommentsEJBModule}/build.xml" inheritall="false" target="-run-deploy-am"/>
+        <ant antfile="${project.FriendEJBModule}/build.xml" inheritall="false" target="-run-deploy-am"/>
         <ant antfile="${project.FriendMates-war}/build.xml" inheritall="false" target="-run-deploy-am"/>
+        <ant antfile="${project.FriendRequestEJBModule}/build.xml" inheritall="false" target="-run-deploy-am"/>
+        <ant antfile="${project.FriendRequestEJBModule-1}/build.xml" inheritall="false" target="-run-deploy-am"/>
         <ant antfile="${project.GroupChatEJBModule}/build.xml" inheritall="false" target="-run-deploy-am"/>
         <ant antfile="${project.GroupChatXUserEJBModule}/build.xml" inheritall="false" target="-run-deploy-am"/>
         <ant antfile="${project.LikeEJBModule}/build.xml" inheritall="false" target="-run-deploy-am"/>
@@ -671,7 +689,15 @@ exists or setup the property manually. For example like this:
             <property location="${build.dir}" name="dist.ear.dir"/>
             <property name="deploy.on.save" value="${build.deploy.on.save}"/>
         </ant>
+        <ant antfile="${project.FriendEJBModule}/build.xml" inheritall="false" target="clean-ear">
+            <property location="${build.dir}" name="dist.ear.dir"/>
+            <property name="deploy.on.save" value="${build.deploy.on.save}"/>
+        </ant>
         <ant antfile="${project.FriendMates-war}/build.xml" inheritall="false" target="clean-ear">
+            <property location="${build.dir}" name="dist.ear.dir"/>
+            <property name="deploy.on.save" value="${build.deploy.on.save}"/>
+        </ant>
+        <ant antfile="${project.FriendRequestEJBModule-1}/build.xml" inheritall="false" target="clean-ear">
             <property location="${build.dir}" name="dist.ear.dir"/>
             <property name="deploy.on.save" value="${build.deploy.on.save}"/>
         </ant>

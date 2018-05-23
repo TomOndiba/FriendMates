@@ -15,6 +15,10 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
@@ -93,7 +97,7 @@ public class UserManagedBean implements Serializable {
     Boolean blnIsDialogOpen = false;
     Boolean isVerified = false;
     Boolean isMailSent = false;
-    String theme="delta";
+    String theme = "delta";
 
     Cipher ecipher;
     Cipher dcipher;
@@ -120,7 +124,6 @@ public class UserManagedBean implements Serializable {
         this.selected = selected;
     }
 
-    
     public Integer getUserId() {
         return userId;
     }
@@ -247,7 +250,7 @@ public class UserManagedBean implements Serializable {
 
     public void setTheme(String theme) {
         this.theme = theme;
-    }        
+    }
 
     public Map<String, Integer> getLstCountry() throws SQLException {
         Map<String, Integer> TemplstCountry = new LinkedHashMap<String, Integer>();
@@ -509,8 +512,6 @@ public class UserManagedBean implements Serializable {
                 msg.setSeverity(FacesMessage.SEVERITY_ERROR);
                 FacesContext.getCurrentInstance().addMessage(null, msg);
                 throw new ValidatorException(msg);
-                //return "LoginRegistration.xhtml?faces-redirect=true";
-
             }
 
             if (request.isUserInRole("UserRole")) {
@@ -523,7 +524,7 @@ public class UserManagedBean implements Serializable {
                 if (logdInUser.getIsVerified() == 1) {
                     HttpSession userSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
                     userSession.setAttribute("userEmail", emailId);
-                    theme="home";
+                    theme = "home";
                     return "/User/index.xhtml?faces-redirect=true";
                 } else {
                     request.logout();
@@ -641,7 +642,6 @@ public class UserManagedBean implements Serializable {
 
     public void checkLogin() {
 
-        
         HttpSession userSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 
         if (userSession.getAttribute("userEmail") == null) {
@@ -699,33 +699,43 @@ public class UserManagedBean implements Serializable {
 
             SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyyhhmmssSSS");
             String format = sdf.format(new java.util.Date());
-            profilePicture = format + "." + FilenameUtils.getExtension(event.getFile().getFileName());
-            uploadFile(profilePicture, event.getFile().getInputstream());
+            profilePicture = format;
+
+            Path folder = Paths.get(uploadPath);
+            String filename = FilenameUtils.getBaseName(profilePicture);
+            String extension = FilenameUtils.getExtension(event.getFile().getFileName());
+
+            Path file = Files.createTempFile(folder, "", "." + extension);
+
+            uploadFile(profilePicture, extension ,file, event.getFile().getInputstream());
 
             userBean.uploadPhoto(userId, profilePicture);
+            
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(UserManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void uploadFile(String fileName, InputStream in) {
+    public void uploadFile(String fileName, String extenstion ,Path file, InputStream in) {
         try {
-            System.out.println("path : " + uploadPath + "/" + fileName);
-            // write the inputStream to a FileOutputStream
-            try (OutputStream out = new FileOutputStream(new File(uploadPath + "/" + fileName))) {
-                int read = 0;
-                byte[] bytes = new byte[1024];
 
-                while ((read = in.read(bytes)) != -1) {
-                    out.write(bytes, 0, read);
-                }
-
-                in.close();
-                out.flush();
+            try {
+                Files.copy(in, file,StandardCopyOption.REPLACE_EXISTING);
             }
-
-            System.out.println("New file created!");
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+            file.toFile().renameTo(new File(uploadPath + "/" + fileName + "." + extenstion));
+            
+            profilePicture=fileName + "." + extenstion;
+            
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -747,11 +757,15 @@ public class UserManagedBean implements Serializable {
     public void selectedUser() throws IOException {
 
         selected = user;
+        HttpSession selectedUserSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+        selectedUserSession.setAttribute("selectedUserId", selected.getId());
+
         FacesContext.getCurrentInstance().getExternalContext().redirect("profilePage.xhtml?faces-redirect=true");
         FacesContext.getCurrentInstance().responseComplete();
     }
+
     public void verifyUser(String code, String email) throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
-        
+
         String verificationCode = decrypt(code);
         String mail = decrypt(email);
         List<UserTB> lstUser = userBean.getUserByVerificationCodeAndEmail(verificationCode, mail);
@@ -774,7 +788,7 @@ public class UserManagedBean implements Serializable {
             userBean.updateVerificationCodeAndStatus(userId);
 
         } else {
-            
+
             if (verified == 1 && VerifiedCode == null) {
                 isVerified = true;
             } else {
@@ -785,6 +799,12 @@ public class UserManagedBean implements Serializable {
         isMailSent = false;
     }
 
+    public void manageFriendRequest(UserTB fromUser) throws IOException
+    {
+        selected=fromUser;
+        FacesContext.getCurrentInstance().getExternalContext().redirect("profilePage.xhtml?faces-redirect=true");
+        FacesContext.getCurrentInstance().responseComplete();
+    }
     public UserManagedBean() {
 
     }

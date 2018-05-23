@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 20, 2018 at 01:06 PM
+-- Generation Time: May 23, 2018 at 05:51 PM
 -- Server version: 5.7.21-0ubuntu0.16.04.1
 -- PHP Version: 7.0.28-0ubuntu0.16.04.1
 
@@ -310,10 +310,30 @@ INSERT INTO `countryTB` (`id`, `countryName`) VALUES
 CREATE TABLE `friendRequestTB` (
   `id` int(11) NOT NULL,
   `fromUserId` int(11) NOT NULL,
-  `toUserId` int(11) NOT NULL,
-  `status` int(11) NOT NULL,
-  `createdDate` date NOT NULL
+  `toUserId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `friendTB`
+--
+
+CREATE TABLE `friendTB` (
+  `userId1` int(11) NOT NULL,
+  `userId2` int(11) NOT NULL,
+  `priorityOrder` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `friendTB`
+--
+
+INSERT INTO `friendTB` (`userId1`, `userId2`, `priorityOrder`) VALUES
+(21, 28, 0),
+(28, 21, 0),
+(28, 35, 0),
+(35, 28, 0);
 
 -- --------------------------------------------------------
 
@@ -357,12 +377,11 @@ CREATE TABLE `groupTB` (
 INSERT INTO `groupTB` (`emailId`, `groupName`) VALUES
 ('akku3369@gmail.com', 'UserGroup'),
 ('ayushi@gmail.com', 'UserGroup'),
-('heenarana26.hr@gmail.com', 'UserGroup'),
-('hellyhdesai@gmail.com', 'UserGroup'),
 ('heta@gmail.com', 'UserGroup'),
 ('hjariwala130896@gmail.com', 'AdminGroup'),
 ('hjariwala1414@gmail.com', 'UserGroup'),
 ('mansinmodi@gmail.com', 'UserGroup'),
+('moheetjari@gmail.com', 'UserGroup'),
 ('viralidabhi22@gmail.com', 'UserGroup'),
 ('yashpatel@gmail.com', 'UserGroup');
 
@@ -409,12 +428,23 @@ CREATE TABLE `postTB` (
   `heading` varchar(255) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   `isImage` tinyint(1) DEFAULT NULL,
-  `imageUrl` varchar(255) DEFAULT NULL,
   `isVideo` tinyint(1) DEFAULT NULL,
   `videoUrl` varchar(255) DEFAULT NULL,
   `userId` int(11) DEFAULT NULL,
   `location` varchar(255) DEFAULT NULL,
-  `createdDate` date DEFAULT NULL
+  `createdDate` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `postXimageTB`
+--
+
+CREATE TABLE `postXimageTB` (
+  `id` int(11) NOT NULL,
+  `postId` int(11) DEFAULT NULL,
+  `imageUrl` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -446,14 +476,13 @@ CREATE TABLE `userTB` (
 INSERT INTO `userTB` (`id`, `fName`, `lName`, `mobileNo`, `emailId`, `password`, `dob`, `gender`, `profilePicture`, `countryId`, `isVerified`, `verificationCode`, `createdDate`) VALUES
 (1, 'Harsh', 'Jariwala', 8141484832, 'hjariwala130896@gmail.com', '60fe74406e7f353ed979f350f2fbb6a2e8690a5fa7d1b0c32983d1d8b3f95f67', '1996-08-13', 'Male', NULL, 105, 1, NULL, '2018-04-17'),
 (3, 'Aakansha', 'Patel', 9904103571, 'akku3369@gmail.com', '3e16ecfa88c44efef1d838d87fa094e84e31f679927968d24eb75ad3387dfee4', '1997-02-13', 'Female', '18052018051639986.jpg', 105, 1, NULL, '2018-04-17'),
-(4, 'Heena', 'Rana', 9429883300, 'heenarana26.hr@gmail.com', '15196013d48089771913d0975b5a41bb9d5d25d3cc2060a48fed78401864e450', '1996-09-08', 'Female', NULL, 105, 0, NULL, '2018-04-17'),
-(5, 'Helly', 'Desai', 9825704243, 'hellyhdesai@gmail.com', '55a988fba0c45b1f34f0a62e493339703df3e0c5016314c618a3bc1474f99dc0', '2018-04-11', 'Female', NULL, 105, 0, NULL, '2018-04-18'),
 (8, 'Ayushi', 'Vankawala', 9874563210, 'ayushi@gmail.com', '22f9f70548f30c6cdd3a8eb8664a6c43cd10404a767162822f483aa4f6cee4a4', '1997-08-27', 'Female', NULL, 105, 0, NULL, '2018-04-18'),
 (9, 'Mansi', 'Modi', 9632587410, 'mansinmodi@gmail.com', '70c5f99bf46c467e5cfc362900a0138caae4709a4ae765d33b0430faf1859e70', '1997-02-22', 'Female', NULL, 105, 0, NULL, '2018-04-18'),
 (10, 'Heta', 'Sheth', 1234567890, 'heta@gmail.com', '23f5eea7e0011dc26470d141ab0014325027fcacc75250dba26030f53e7f765a', '1996-10-07', 'Female', NULL, 105, 0, NULL, '2018-04-18'),
 (11, 'Yash', 'Patel', 1234569870, 'yashpatel@gmail.com', '0b4aa33184c17d937b0b2fbbf2bf2c2b459092d76fbbf32c14d2d16c3b593c94', '2018-04-19', 'Male', NULL, 105, 0, NULL, '2018-04-20'),
-(21, 'Virali', 'Dabhi', 9924324178, 'viralidabhi22@gmail.com', '64b41ab6c82ec29f3d0ced26c54ceaebcb166c6ae4adb50e26b995c7324fe16a', '1996-10-30', 'Female', NULL, 105, 1, NULL, '2018-05-19'),
-(28, 'H', 'Jariwala', 8141484832, 'hjariwala1414@gmail.com', 'daef57dd7c523f76ef0522a0f5430c17fcd6a574487c320269abbd821d92fa01', '1996-08-13', 'Male', NULL, 105, 1, NULL, '2018-05-20');
+(21, 'Virali', 'Dabhi', 9924324178, 'viralidabhi22@gmail.com', '64b41ab6c82ec29f3d0ced26c54ceaebcb166c6ae4adb50e26b995c7324fe16a', '1996-10-30', 'Female', '20052018020251157.jpg', 105, 1, NULL, '2018-05-19'),
+(28, 'H', 'Jariwala', 8141484832, 'hjariwala1414@gmail.com', 'daef57dd7c523f76ef0522a0f5430c17fcd6a574487c320269abbd821d92fa01', '1996-08-13', 'Male', '23052018124213310.jpg', 105, 1, NULL, '2018-05-20'),
+(35, 'mohit', 'Jariwala', 8866022012, 'moheetjari@gmail.com', 'da54773a7a5a99781e6db854eb3f10257e7d61dc7280dc36a2e43389aaa542f0', '1998-07-25', 'Male', '23052018011455505.jpg', 105, 1, NULL, '2018-05-22');
 
 --
 -- Indexes for dumped tables
@@ -481,6 +510,14 @@ ALTER TABLE `friendRequestTB`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fromUserId` (`fromUserId`,`toUserId`),
   ADD KEY `toUserId` (`toUserId`);
+
+--
+-- Indexes for table `friendTB`
+--
+ALTER TABLE `friendTB`
+  ADD PRIMARY KEY (`userId1`,`userId2`),
+  ADD KEY `userId2` (`userId2`),
+  ADD KEY `userId1` (`userId1`);
 
 --
 -- Indexes for table `groupChatTB`
@@ -529,6 +566,13 @@ ALTER TABLE `postTB`
   ADD KEY `userId` (`userId`);
 
 --
+-- Indexes for table `postXimageTB`
+--
+ALTER TABLE `postXimageTB`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `postId` (`postId`);
+
+--
 -- Indexes for table `userTB`
 --
 ALTER TABLE `userTB`
@@ -551,6 +595,11 @@ ALTER TABLE `commentsTB`
 ALTER TABLE `countryTB`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=251;
 --
+-- AUTO_INCREMENT for table `friendRequestTB`
+--
+ALTER TABLE `friendRequestTB`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+--
 -- AUTO_INCREMENT for table `groupChatTB`
 --
 ALTER TABLE `groupChatTB`
@@ -571,10 +620,15 @@ ALTER TABLE `messageTB`
 ALTER TABLE `postTB`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `postXimageTB`
+--
+ALTER TABLE `postXimageTB`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `userTB`
 --
 ALTER TABLE `userTB`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 --
 -- Constraints for dumped tables
 --
@@ -593,6 +647,13 @@ ALTER TABLE `commentsTB`
 ALTER TABLE `friendRequestTB`
   ADD CONSTRAINT `friendRequestTB_ibfk_1` FOREIGN KEY (`fromUserId`) REFERENCES `userTB` (`id`),
   ADD CONSTRAINT `friendRequestTB_ibfk_2` FOREIGN KEY (`toUserId`) REFERENCES `userTB` (`id`);
+
+--
+-- Constraints for table `friendTB`
+--
+ALTER TABLE `friendTB`
+  ADD CONSTRAINT `friendTB_ibfk_1` FOREIGN KEY (`userId1`) REFERENCES `userTB` (`id`),
+  ADD CONSTRAINT `friendTB_ibfk_2` FOREIGN KEY (`userId2`) REFERENCES `userTB` (`id`);
 
 --
 -- Constraints for table `groupChatTB`
@@ -633,6 +694,12 @@ ALTER TABLE `messageTB`
 --
 ALTER TABLE `postTB`
   ADD CONSTRAINT `postTB_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `userTB` (`id`);
+
+--
+-- Constraints for table `postXimageTB`
+--
+ALTER TABLE `postXimageTB`
+  ADD CONSTRAINT `postXimageTB_ibfk_1` FOREIGN KEY (`postId`) REFERENCES `postTB` (`id`);
 
 --
 -- Constraints for table `userTB`

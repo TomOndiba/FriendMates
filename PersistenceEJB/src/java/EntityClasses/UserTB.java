@@ -53,7 +53,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "UserTB.findByVerificationCodeAndEmailId", query = "SELECT u FROM UserTB u WHERE u.verificationCode = :verificationCode AND u.emailId = :emailId"),
     @NamedQuery(name = "UserTB.findByCreatedDate", query = "SELECT u FROM UserTB u WHERE u.createdDate = :createdDate")})
 public class UserTB implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -99,6 +98,10 @@ public class UserTB implements Serializable {
     private Collection<GroupTB> groupTBCollection;
     @OneToMany(mappedBy = "userId")
     private Collection<LikeTB> likeTBCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userTB")
+    private Collection<FriendTB> friendTBCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userTB1")
+    private Collection<FriendTB> friendTBCollection1;
     @JoinColumn(name = "countryId", referencedColumnName = "id")
     @ManyToOne
     private CountryTB countryId;
@@ -252,6 +255,24 @@ public class UserTB implements Serializable {
         this.likeTBCollection = likeTBCollection;
     }
 
+    @XmlTransient
+    public Collection<FriendTB> getFriendTBCollection() {
+        return friendTBCollection;
+    }
+
+    public void setFriendTBCollection(Collection<FriendTB> friendTBCollection) {
+        this.friendTBCollection = friendTBCollection;
+    }
+
+    @XmlTransient
+    public Collection<FriendTB> getFriendTBCollection1() {
+        return friendTBCollection1;
+    }
+
+    public void setFriendTBCollection1(Collection<FriendTB> friendTBCollection1) {
+        this.friendTBCollection1 = friendTBCollection1;
+    }
+
     public CountryTB getCountryId() {
         return countryId;
     }
@@ -347,5 +368,5 @@ public class UserTB implements Serializable {
     public String toString() {
         return "EntityClasses.UserTB[ id=" + id + " ]";
     }
-
+    
 }

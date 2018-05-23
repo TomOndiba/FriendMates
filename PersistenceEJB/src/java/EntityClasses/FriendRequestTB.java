@@ -6,19 +6,17 @@
 package EntityClasses;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -31,24 +29,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "FriendRequestTB.findAll", query = "SELECT f FROM FriendRequestTB f"),
     @NamedQuery(name = "FriendRequestTB.findById", query = "SELECT f FROM FriendRequestTB f WHERE f.id = :id"),
-    @NamedQuery(name = "FriendRequestTB.findByStatus", query = "SELECT f FROM FriendRequestTB f WHERE f.status = :status"),
-    @NamedQuery(name = "FriendRequestTB.findByCreatedDate", query = "SELECT f FROM FriendRequestTB f WHERE f.createdDate = :createdDate")})
+    @NamedQuery(name = "FriendRequestTB.findByFromUserId", query = "SELECT f FROM FriendRequestTB f WHERE f.fromUserId.id = :userId"),
+    @NamedQuery(name = "FriendRequestTB.findByToUserId", query = "SELECT f FROM FriendRequestTB f WHERE f.toUserId.id = :userId"),
+    @NamedQuery(name = "FriendRequestTB.findByToUserIdAndFromUserId", query = "SELECT f FROM FriendRequestTB f WHERE f.toUserId.id = :touserId AND f.fromUserId.id = :fromuserId")})
 public class FriendRequestTB implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "status")
-    private int status;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "createdDate")
-    @Temporal(TemporalType.DATE)
-    private Date createdDate;
     @JoinColumn(name = "fromUserId", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private UserTB fromUserId;
@@ -63,34 +54,12 @@ public class FriendRequestTB implements Serializable {
         this.id = id;
     }
 
-    public FriendRequestTB(Integer id, int status, Date createdDate) {
-        this.id = id;
-        this.status = status;
-        this.createdDate = createdDate;
-    }
-
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
     }
 
     public UserTB getFromUserId() {
@@ -133,5 +102,5 @@ public class FriendRequestTB implements Serializable {
     public String toString() {
         return "EntityClasses.FriendRequestTB[ id=" + id + " ]";
     }
-    
+
 }

@@ -8,7 +8,7 @@
     <h:body>
         <h:form>
             <div class="col-md-3 static">
-                <div class="profile-card" style="height: 50px;margin-top:15px">
+                <div class="profile-card" style="height: 50px;margin-top:15px;background-color: #360033;background-image: -webkit-gradient(linear, left top, right top, from(#360033), to(#0b8793));background-image: -webkit-linear-gradient(left, #360033, #0b8793);background-image: -moz-linear-gradient(left, #360033, #0b8793);background-image: -ms-linear-gradient(left, #360033, #0b8793);background-image: -o-linear-gradient(left, #360033, #0b8793);background-image: linear-gradient(left, #360033, #0b8793);filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#360033', endColorstr='#0b8793', gradientType='1');">
                     <h:graphicImage library="images/Uploads" name="#{userManagedBean.profilePicture}"  alt="user" class="profile-photo"  rendered="#{not empty userManagedBean.profilePicture}"/>
                     <h:graphicImage library="images/Uploads" name="NoImage.png"  alt="user" class="profile-photo"  rendered="#{empty userManagedBean.profilePicture}"/>
                     <h5><b><h:commandLink action="/User/index.xhtml?faces-redirect=true" style="text-decoration: none;color: white">#{userManagedBean.firstName} #{userManagedBean.lastName}</h:commandLink></b></h5>                
